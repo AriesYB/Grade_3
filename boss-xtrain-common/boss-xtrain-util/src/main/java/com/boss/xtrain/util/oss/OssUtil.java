@@ -41,8 +41,8 @@ public class OssUtil {
      * 访问阿里云对象存储必要的配置参数
      */
     private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
-    private static final String ACCESS_KEY_ID = "LTAI4FykJQSYEAhDxd1TNX5a";
-    private static final String SECRET = "QdaU3YrWVSpkgAKLZJy1MdhXTGNmwk";
+    private static final String ACCESS_KEY_ID = "";
+    private static final String SECRET = "";
     private static final String BUCKET_NAME = "bes-bucket";
     /**
      * OSSClient实例，用于访问对象存储空间
