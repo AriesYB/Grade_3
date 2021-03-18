@@ -1,0 +1,30 @@
+server:
+  port: 9999
+eureka:
+  instance:
+    instance-id: zuul-service-1
+  client:
+    service-url:
+      defaultZone: http://eureka1.com:7001/eureka,http://eureka2.com:7002/eureka
+spring:
+  cloud:
+    config:
+      #指定配置名称(没有后缀)
+      name: config-zuul-service
+      #指定环境
+      profile: dev
+      #指定分支
+      label: master
+      discovery:
+        enabled: true
+        service-id: config-server
+  rabbitmq:
+    host: ikanp.top
+    port: 5672
+    username: root
+    password: 476900
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

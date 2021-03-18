@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosssoft.learning.mapper.UserMapper">
+    <resultMap id="user" type="com.bosssoft.learning.model.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="company" javaType="com.bosssoft.learning.model.Company">
+            <id property="id" column="c_id"/>
+            <result property="name" column="c_name"/>
+        </association>
+        <collection property="roles" ofType="com.bosssoft.learning.model.Role" javaType="java.util.HashSet">
+            <id property="id" column="r_id"/>
+            <result property="name" column="r_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectUser" resultMap="user">
+        SELECT user.id,
+               user.name,
+               c.id      as c_id,
+               c.name    as c_name,
+               role.id   as r_id,
+               role.name as r_name
+        FROM t_user user
+                 LEFT JOIN t_company c ON user.company_id = c.id
+                 LEFT JOIN t_user_role ur on user.id = ur.user_id
+                 LEFT JOIN t_role role on ur.role_id = role.id
+        WHERE user.id = #{id}
+    </select>
+
+    <!--多条件查询-->
+    <select id="selectUserByCondition" resultMap="user" parameterType="java.util.List">
+        SELECT user.id,
+        user.name,
+        c.id as c_id,
+        c.name as c_name,
+        role.id as r_id,
+        role.name as r_name
+        FROM t_user user
+        LEFT JOIN t_company c ON user.company_id = c.id
+        LEFT JOIN t_user_role ur on user.id = ur.user_id
+        LEFT JOIN t_role role on ur.role_id = role.id
+        <!--使用where标签当没有条件是不会发生错误-->
+        <where>
+            <if test="list!=null">
+                <!--遍历map访问不同的表的列-->
+                <foreach collection="list" item="item" index="table" open=" " separator=" " close=" ">
+                    <if test="table==0 and item !=null">
+                        <foreach collection="item" item="value" index="column">
+                            <choose>
+                                <!--如果列为name就模糊查找-->
+                                <when test="column=='name'">
+                                    AND user.${column} like CONCAT('%',CONCAT(#{value},'%'))
+                                </when>
+                                <otherwise>
+                                    AND user.${column} = #{value}
+                                </otherwise>
+                            </choose>
+                        </foreach>
+                    </if>
+                    <if test="table==1 and item !=null">
+                        <foreach collection="item" item="value" index="column">
+                            <choose>
+                                <!--如果列为name就模糊查找-->
+                                <when test="column=='name'">
+                                    AND c.${column} like CONCAT('%',CONCAT(#{value},'%'))
+                                </when>
+                                <otherwise>
+                                    AND c.${column} = #{value}
+                                </otherwise>
+                            </choose>
+                        </foreach>
+                    </if>
+                    <if test="table==2 and item !=null">
+                        <foreach collection="item" item="value" index="column">
+                            <choose>
+                                <!--如果列为name就模糊查找-->
+                                <when test="column=='name'">
+                                    AND role.${column} like CONCAT('%',CONCAT(#{value},'%'))
+                                </when>
+                                <otherwise>
+                                    AND role.${column} = #{value}
+                                </otherwise>
+                            </choose>
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertUser" parameterType="com.bosssoft.learning.model.UserDO">
+        INSERT INTO t_user (id, name, company_id)
+        values (#{id}, #{name}, #{companyId});
+    </insert>
+
+    <update id="updateUser" parameterType="com.bosssoft.learning.model.UserDO">
+        UPDATE t_user
+        SET name      = #{name},
+            company_id=#{companyId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="com.bosssoft.learning.model.UserDO">
+        DELETE
+        FROM t_user
+        WHERE id = #{id}
+    </delete>
+</mapper>

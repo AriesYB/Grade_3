@@ -1,0 +1,22 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    instance-id: eureka-2
+    hostname: eureka2.com
+  client:
+    #注册自己
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka1.com:7001/eureka
+  dashboard:
+    enabled: true
+  server:
+    #是否启动自我保护模式
+    enable-self-preservation: false
+    #清理服务间隔5秒
+    eviction-interval-timer-in-ms: 5000

@@ -1,0 +1,7 @@
+
+
+java:S11864"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(”˜ü¸8ÊâêÏ¤.
+a	java:S112'"FDefine and throw a dedicated exception instead of using a generic one.(Ñ€Ë8ÊâêÏ¤.
+h
+java:S2259)"FA "NullPointerException" could be thrown; "findMax()" can return null.(ãò³òşÿÿÿÿ8ÊâêÏ¤.
+a	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(Ñ€Ë8ÊâêÏ¤.

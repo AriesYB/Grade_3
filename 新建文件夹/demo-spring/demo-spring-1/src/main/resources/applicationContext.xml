@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="yang" class="com.bosssoft.learning.bean.Student">
+        <property name="id" value="53523"/>
+        <property name="name" value="杨"/>
+    </bean>
+
+    <bean id="studentService" class="com.bosssoft.learning.service.impl.StudentServiceImpl" init-method="init" destroy-method="destroy"/>
+</beans>

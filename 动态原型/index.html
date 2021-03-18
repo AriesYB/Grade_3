@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh=CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东软云医院管理系统</title>
+    <!-- bootstrap框架核心样式 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 引入jquery文件 -->
+    <script src="js/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="Icon" href="img/his.ico"/>
+    <link rel="stylesheet" href="css/iconStyle.css">
+</head>
+
+<body>
+<div class="whole d-flex flex-column w-100 h-100">
+    <header class="top navbar bg-dark-1 pt-0 pb-0">
+        <a id="his-icon" class="navbar-brand text-light d-flex" href="index.html"><img src="img/his.ico"
+                                                                                       class="justify-content-center"
+                                                                                       alt="" height="30px"
+                                                                                       width="30px"></a>
+        <div class="dropDown pl-3 pr-3 pt-2 pb-2" id="dropDownMenuButton">
+            <svg id="dropDownMenuButton-icon" class="bi bi-chevron-down text-secondary" width="1em" height="1em"
+                 viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
+                      clip-rule="evenodd"/>
+            </svg>
+            <div id="dropDownMenu">
+                <a class="dropDownItem text-dark h5" href="#">
+                    <svg class="bi bi-power text-danger" width="0.8em" height="0.8em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z"
+                              clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z" clip-rule="evenodd"/>
+                    </svg>
+                    退出</a>
+            </div>
+        </div>
+    </header>
+    <div class="d-flex flex-row flex-fill h-100">
+        <div id="side" class="bg-dark-1 p-0">
+            <div id="sidebar" class="d-flex flex-column">
+                <nav id="side-nav" class="navbar navbar-dark bg-dark-1 d-flex flex-row-reverse">
+                    <button id="sidebar-btn" class="navbar-toggler" data-expand="false">
+                        <span id="sidebar-btn-icon" class="navbar-toggler-icon">
+                        </span>
+                        <svg id="sidebar-btn-icon-1" class="bi bi-text-indent-right text-light d-none" width="1.5em"
+                             height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </nav>
+                <div id="sidebar-content" class="d-flex flex-column accordion">
+                    <div id="menu-item-1" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                         data-target="#menu-item-1-child" aria-controls="menu-item-1-child" aria-expanded="false">门诊医生
+                    </div>
+                    <div class="collapse" id="menu-item-1-child" data-parent="#sidebar-content">
+                        <div class="bg-dark-1">
+                            <div id="menu-item-1-child-1" class="sidebar-content-btn-2" data-href="outpatient.html"
+                                 data-selected="false">
+                                 门诊病历
+<!--                                <i class="text-white-50 mr">•</i>-->
+                            </div>
+                            <div id="menu-item-1-child-2" class="sidebar-content-btn-2" data-href="medical_lab_template.html"
+                                 data-selected="false">
+                                医技模板
+                            </div>
+                            <div id="menu-item-1-child-3" class="sidebar-content-btn-2" data-href="western_medicine_template.html"
+                                 data-selected="false">
+                                西药处方模板
+                            </div>
+                            <div id="menu-item-1-child-4" class="sidebar-content-btn-2" data-href="traditional_medicine_template.html"
+                                 data-selected="false">
+                                中药处方模板
+                            </div>
+                        </div>
+                    </div>
+                    <div id="menu-item-2" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                         data-target="#menu-item-2-child" aria-controls="menu-item-2-child" aria-expanded="false">医技处置
+                    </div>
+                    <div class="collapse" id="menu-item-2-child" data-parent="#sidebar-content">
+                        <div class="bg-dark-1">
+                            <div id="menu-item-2-child-1" class="sidebar-content-btn-2" data-href="index-1.html"
+                                 data-selected="false">
+                                医技处置模块
+                            </div>
+<!--                            <div id="menu-item-2-child-2" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                患者检验-->
+<!--                            </div>-->
+<!--                            <div id="menu-item-2-child-3" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                患者处置-->
+<!--                            </div>-->
+<!--                            <div id="menu-item-2-child-4" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                医技管理-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                    <div id="menu-item-3" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                         data-target="#menu-item-3-child" aria-controls="menu-item-3-child" aria-expanded="false">药房管理
+                    </div>
+                    <div class="collapse" id="menu-item-3-child" data-parent="#sidebar-content">
+                        <div class="bg-dark-1">
+                            <div id="menu-item-3-child-1" class="sidebar-content-btn-2" data-href="dispensing.html"
+                                 data-selected="false">
+                                门诊发药
+                            </div>
+                            <div id="menu-item-3-child-2" class="sidebar-content-btn-2" data-href="drugwithdrawal.html"
+                                 data-selected="false">
+                                门诊退药
+                            </div>
+                            <div id="menu-item-3-child-3" class="sidebar-content-btn-2" data-href="drugmanage.html"
+                                 data-selected="false">
+                                药品管理
+                            </div>
+                        </div>
+                    </div>
+                    <div id="menu-item-4" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                         data-target="#menu-item-4-child" aria-controls="menu-item-4-child" aria-expanded="false">财务信息
+                    </div>
+                    <div class="collapse" id="menu-item-4-child" data-parent="#sidebar-content">
+                        <div class="bg-dark-1">
+                            <div id="menu-item-4-child-1" class="sidebar-content-btn-2" data-href="index-2.html"
+                                 data-selected="false">
+                                财务管理模块
+                            </div>
+<!--                            <div id="menu-item-4-child-2" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                门诊日结核对-->
+<!--                            </div>-->
+<!--                            <div id="menu-item-4-child-3" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                门诊科室工作统计-->
+<!--                            </div>-->
+<!--                            <div id="menu-item-4-child-4" class="sidebar-content-btn-2" data-href=""-->
+<!--                                 data-selected="false">-->
+<!--                                门诊医生工作统计-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="flex-fill">
+            <iframe src="welcome.html" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //图标变色
+        $("#his-icon").hover(function () {
+            $("#his-icon").children("img").attr("src", "img/his-1.ico");
+        }, function () {
+            $("#his-icon").children("img").attr("src", "img/his.ico");
+        });
+        //菜单按钮变色
+        $("#sidebar-btn").hover(function () {
+            $("#sidebar-btn").addClass("bg-dark-2");
+        },function () {
+            $("#sidebar-btn").removeClass("bg-dark-2");
+        });
+        //点击菜单按钮
+        $("#sidebar-btn").click(function () {
+            let isExpanded = $("#sidebar-btn").data("expand");
+            if (isExpanded === false) {//固定侧边栏
+                $("#sidebar-btn").data("expand", true);
+                $("#side").addClass("side-expand");
+                $("#sidebar-btn-icon").addClass("d-none");
+                $("#sidebar-btn-icon-1").removeClass("d-none");
+            } else {//取消固定
+                $("#sidebar-btn").data("expand", false);
+                $("#side").removeClass("side-expand");
+                $("#sidebar-btn-icon").removeClass("d-none");
+                $("#sidebar-btn-icon-1").addClass("d-none");
+            }
+        });
+        //点击菜单项
+        $(".sidebar-content-btn").click(function () {
+            const current = this.id;
+            $(".sidebar-content-btn").each(function () {
+                if (current === this.id) {
+                    if ($("#" + current).data("selected") === false) {
+                        $("#" + current).data("selected", true);
+                        $("#" + current).addClass("sidebar-content-btn-selected");
+                    }
+                } else {
+                    if ($("#" + this.id).data("selected") === true) {
+                        $("#" + this.id).data("selected", false);
+                        $("#" + this.id).removeClass("sidebar-content-btn-selected");
+                    }
+                }
+            })
+        });
+        //点击子菜单项
+        $(".sidebar-content-btn-2").click(function () {
+            const current = this.id;
+            //显示对应子页面
+            const src = $("#"+current).data("href");
+            $("iframe").attr("src",src);
+            $(".sidebar-content-btn-2").each(function () {
+                if (current === this.id) {
+                    if ($("#" + current).data("selected") === false) {
+                        $("#" + current).data("selected", true);
+                        $("#" + current).addClass("sidebar-content-btn-2-selected");
+                    }
+                } else {
+                    if ($("#" + this.id).data("selected") === true) {
+                        $("#" + this.id).data("selected", false);
+                        $("#" + this.id).removeClass("sidebar-content-btn-2-selected");
+                    }
+                }
+            })
+        })
+    });
+</script>
+</body>
+
+</html>

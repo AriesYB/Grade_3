@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<head xmlns:height="http://www.w3.org/1999/xhtml" xmlns:height="http://www.w3.org/1999/xhtml">
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="./h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="./h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="./h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="./h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="./css/layui.css"  media="all">
+    <!--[if IE 6]>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>医生诊疗</title>
+</head>
+<body>
+<article class="page-container">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md6">
+                        <div class="layui-input-block">
+                            <input style="text-align:left" type="text" name="title" required  lay-verify="required" placeholder="请输入需要查询的信息" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-col-md1">
+                        <button class="layui-btn layui-btn-normal">查询</button>
+                    </div>
+                    <input type="radio" name="sex" value="nan" title="名称查询">
+                    <input type="radio" name="sex" value="nv" title="编号查询" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-col-md-offset9">
+                    <button type="button" class="layui-btn layui-btn-normal" id="test8">导入模板</button>
+                    <button type="button" class="layui-btn layui-btn-normal" id="">导出模板</button>
+
+            </div>
+        </div>
+    </div>
+    <table id="demo" lay-filter="test"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail" style="width: 60px">查看</a>
+    </script>
+
+    </div>
+
+    <div class="row cl" style="height: 50px"></div>
+</article>
+
+<script src="./layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="./lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="./h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="./h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src=".//lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript">
+
+    layui.use('element', function(){
+        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+    });
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
+        var table = layui.table
+        var upload = layui.upload
+        table.render({
+            elem: '#demo'
+            , height: 420
+            , limit: 7
+            , url: './medicine.json' //数据接口
+            , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            , title: '用户表'
+            , page: true //开启分页
+            , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'name', title: '医技名称',  sort: true, fixed: 'left'}
+                , {field: 'record', title: '医技编号', }
+                , {field: 'time', title: '添加时间', sort: true}
+                , {field: 'range', title: '范围',  sort: true}
+                , {field: 'fee', title: '费用',  sort: true}
+                , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
+            ]]
+        });
+        table.render({
+            elem: '#model'
+            , height: 200
+            , limit: 7
+            , url: './model.json' //数据接口
+            , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            , title: '用户表'
+            , page: true //开启分页
+            , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'name', title: '药品名称', }
+                , {field: 'size', title: '规格', }
+                , {field: 'unit', title: '单位',}
+                , {field: 'method', title: '用法',}
+                , {field: 'dosage', title: '用量',}
+                , {field: 'freq', title: '频次'}
+            ]]
+        });
+        table.render({
+            elem: '#model1'
+            , height: 200
+            , limit: 7
+            , url: './model1.json' //数据接口
+            , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            , title: '用户表'
+            , page: true //开启分页
+            , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'name', title: '药品名称', }
+                , {field: 'size', title: '规格', }
+                , {field: 'unit', title: '单位',}
+                , {field: 'method', title: '用法',}
+                , {field: 'dosage', title: '用量',}
+                , {field: 'freq', title: '频次'}
+            ]]
+        });
+        table.render({
+            elem: '#model2'
+            , height: 200
+            , limit: 7
+            , url: './model2.json' //数据接口
+            , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            , title: '用户表'
+            , page: true //开启分页
+            , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'name', title: '药品名称', }
+                , {field: 'size', title: '规格', }
+                , {field: 'unit', title: '单位',}
+                , {field: 'method', title: '用法',}
+                , {field: 'dosage', title: '用量',}
+                , {field: 'freq', title: '频次'}
+            ]]
+        });
+        upload.render({
+            elem: '#test8'
+            ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+            ,auto: false
+            //,multiple: true
+            ,bindAction: '#test9'
+            ,done: function(res){
+                layer.msg('上传成功');
+                console.log(res)
+            }
+        });
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail') {
+                $("#modal-demo").modal("show")
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            }
+        });
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data; //获取选中的数据
+            switch(obj.event){
+                case 'add':
+                    $("#add").modal("show")
+                    break;
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        $("#modify").modal("show")
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.msg('删除');
+                    }
+                    break;
+            };
+        });
+
+    });
+
+</script>
+</body>
+</html>
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">医技模板详情</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">医技名称</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" placeholder="骨科" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">适用范围</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="全院" title="全院">
+                        <input type="radio" name="sex" value="个人" title="个人" checked>
+                    </div>
+                </div>
+                <table id="model" lay-filter="test"></table>
+
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">医技模板详情</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">医技名称</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" placeholder="骨科" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">适用范围</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="全院" title="全院">
+                        <input type="radio" name="sex" value="个人" title="个人" checked>
+                    </div>
+                </div>
+                <table id="model2" lay-filter="test"></table>
+
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">取消添加</button>
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modify" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">医技模板详情</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">医技名称</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input" placeholder="骨科" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">适用范围</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="全院" title="全院">
+                        <input type="radio" name="sex" value="个人" title="个人" checked>
+                    </div>
+                </div>
+                <table id="model1" lay-filter="test"></table>
+
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">取消修改</button>
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定修改</button>
+            </div>
+        </div>
+    </div>
+</div>

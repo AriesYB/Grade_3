@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosssoft.learning.dao.UserRoleDao">
+
+    <select id="count" parameterType="UserRole">
+        SELECT COUNT(*)
+        FROM user_role
+        WHERE user_id = #{userId}
+          AND role_id = #{roleId}
+    </select>
+    <select id="selectByUserId" resultType="UserRole">
+        SELECT *
+        FROM user_role
+        WHERE user_id = #{id}
+    </select>
+    <update id="update" parameterType="UserRole">
+        UPDATE user_role
+        SET role_id = #{roleId}
+        WHERE user_id = #{userId}
+    </update>
+    <insert id="insert" parameterType="UserRole">
+        INSERT INTO user_role (user_id, role_id)
+        values (#{userId}, #{#roleId})
+    </insert>
+    <delete id="delete" parameterType="UserRole">
+        DELETE
+        FROM user_role
+        WHERE user_id = #{userId}
+          AND role_id = #{roleId}
+    </delete>
+    <insert id="insertList" parameterType="list">
+        INSERT INTO user_role (user_id, role_id) VALUES
+        <foreach collection="list" item="item" open="" separator="," close="">
+            (#{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteAllRole">
+        DELETE FROM user_role WHERE user_id  = #{userId}
+    </delete>
+</mapper>

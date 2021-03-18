@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ybiao.springcloud</groupId>
+    <artifactId>customerMS</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>customerMS</name>
+    <description>Customer Information Management System</description>
+
+    <packaging>pom</packaging>
+
+    <!-- 添加子项目模块 -->
+    <modules>
+        <module>config</module>
+        <module>eureka1</module>
+        <module>eureka2</module>
+        <module>eureka3</module>
+        <module>customer1</module>
+        <module>customer11</module>
+        <module>customer12</module>
+        <module>customer2</module>
+        <module>customer21</module>
+        <module>customer22</module>
+        <module>api_ribbon</module>
+        <module>gateway</module>
+    </modules>
+
+    <!-- 继承springboot父级依赖并指定其版本 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.6.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <!-- 版本号配置 -->
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+    </properties>
+
+    <!-- 依赖版本管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.1.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- springboot的maven插件 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

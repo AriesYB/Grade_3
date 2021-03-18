@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="zh=CN">
+<head>
+    <meta charset="UTF-8">
+    <title>门诊病历</title>
+    <!-- bootstrap框架核心样式 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 引入jquery文件 -->
+    <script src="js/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="js/popper/popper.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/outpatient.css">
+</head>
+<body>
+<div class="d-flex flex-column w-100 h-100 bg-light">
+    <div class="d-flex flex-row flex-fill h-100">
+        <div id="sidebar" class="d-flex flex-column bg-white shadow pl-1 pr-1">
+            <div class="d-flex flex-row justify-content-between">
+                <span id="refresh-patient-btn" class="btn btn-outline-secondary">
+                <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+                          clip-rule="evenodd"/>
+                    <path fill-rule="evenodd"
+                          d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+                          clip-rule="evenodd"/>
+                </svg>
+                </span>
+                <!--侧边栏最小化按钮-->
+                <span id="sidebar-minimize" class="btn btn-outline-secondary">
+                    <svg class="bi bi-box-arrow-in-left" width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                            d="M7.854 11.354a.5.5 0 0 0 0-.708L5.207 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"
+                            clip-rule="evenodd"/>
+                      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0 0 1h9A.5.5 0 0 0 15 8z"
+                            clip-rule="evenodd"/>
+                      <path fill-rule="evenodd"
+                            d="M2.5 14.5A1.5 1.5 0 0 1 1 13V3a1.5 1.5 0 0 1 1.5-1.5h8A1.5 1.5 0 0 1 12 3v1.5a.5.5 0 0 1-1 0V3a.5.5 0 0 0-.5-.5h-8A.5.5 0 0 0 2 3v10a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-1.5a.5.5 0 0 1 1 0V13a1.5 1.5 0 0 1-1.5 1.5h-8z"
+                            clip-rule="evenodd"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-radius: 0">患者姓名:</span>
+                    </div>
+                    <input id="search-patient-name" type="text" class="form-control" placeholder="请输入患者姓名">
+                    <div class="input-group-append">
+                        <span id="search-patient-btn" class="btn btn-outline-secondary"
+                              data-input-id="#search-patient-name">
+                        <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
+                                  clip-rule="evenodd"/>
+                            <path fill-rule="evenodd"
+                                  d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="patient-card" class="card text-center border-0" data-selected="">
+                    <div class="card-header bg-white border-0 ">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li id="self-btn" class="nav-item patient-type-btn" data-list-id="#self-list"
+                                data-expand="true">
+                                <a class="nav-link active">本人</a>
+                            </li>
+                            <li id="department-btn" class="nav-item patient-type-btn" data-list-id="#department-list"
+                                data-expand="false">
+                                <a class="nav-link ">科室</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--医生病人列表-->
+                    <div id="self-list" class="card-body">
+                        <div class=" "><!--accordion-->
+                            <div class="patient-list-btn" data-toggle="collapse"
+                                 data-target="#self-list-1" aria-controls="self-list-1" aria-expanded="true">
+                                <span class="d-inline-block position-relative">
+                                <svg class="bi bi-person" width="1.1em" height="1.1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                </span>未诊患者
+                            </div>
+                            <div id="self-list-1" class="collapse show" data-parent="">
+                                <table id="self-new-patient-list"
+                                       class="table table-hover-my table-bordered bg-white patient-table">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>
+                                            病历号
+                                        </th>
+                                        <th>
+                                            姓名
+                                        </th>
+                                        <th>
+                                            性别
+                                        </th>
+                                        <th>
+                                            年龄
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>5132125</td>
+                                        <td>张三</td>
+                                        <td>男</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6555125</td>
+                                        <td>李四</td>
+                                        <td>男</td>
+                                        <td>35</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6555126</td>
+                                        <td>王五</td>
+                                        <td>男</td>
+                                        <td>42</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="patient-list-btn" data-toggle="collapse"
+                                 data-target="#self-list-2" aria-controls="self-list-2" aria-expanded="false">
+                                <span class="d-inline-block position-relative">
+
+                                <svg class="bi bi-person-check" width="1.1em" height="1.1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6.854.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                </span>已诊患者
+                            </div>
+                            <div id="self-list-2" class="collapse" data-parent="">
+                                <table id="self-old-patient-list"
+                                       class="table table-hover-my table-bordered bg-white patient-table">
+                                    <thead class="bg-light">
+
+                                    <tr>
+                                        <th>
+                                            病历号
+                                        </th>
+                                        <th>
+                                            姓名
+                                        </th>
+                                        <th>
+                                            性别
+                                        </th>
+                                        <th>
+                                            年龄
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>123456</td>
+                                        <td>王刚</td>
+                                        <td>男</td>
+                                        <td>21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>123457</td>
+                                        <td>李健</td>
+                                        <td>女</td>
+                                        <td>21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>123458</td>
+                                        <td>周恒</td>
+                                        <td>女</td>
+                                        <td>21</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--科室病人列表-->
+                    <div id="department-list" class="card-body d-none">
+                        <div class="">
+                            <div class="patient-list-btn" data-toggle="collapse"
+                                 data-target="#department-list-1" aria-controls="department-list-1"
+                                 aria-expanded="true">
+                                <span class="d-inline-block position-relative">
+
+                                <svg class="bi bi-person" width="1.1em" height="1.1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                </span>未诊患者
+                            </div>
+                            <div id="department-list-1" class="collapse show" data-parent="">
+                                <table id="department-new-patient-list"
+                                       class="table table-hover-my table-bordered bg-white patient-table">
+                                    <thead class="bg-light">
+
+                                    <tr>
+                                        <th>
+                                            病历号
+                                        </th>
+                                        <th>
+                                            姓名
+                                        </th>
+                                        <th>
+                                            性别
+                                        </th>
+                                        <th>
+                                            年龄
+                                        </th>
+                                        <th>
+                                            医生
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>5132125</td>
+                                        <td>张三一</td>
+                                        <td>女</td>
+                                        <td>25</td>
+                                        <td>扁鹊</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6555125</td>
+                                        <td>李四二</td>
+                                        <td>男</td>
+                                        <td>35</td>
+                                        <td>张仲景</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6555126</td>
+                                        <td>王五三</td>
+                                        <td>男</td>
+                                        <td>35</td>
+                                        <td>李时珍</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="patient-list-btn" data-toggle="collapse"
+                                 data-target="#department-list-2" aria-controls="department-list-2"
+                                 aria-expanded="false">
+                                <span class="d-inline-block position-relative">
+
+                                <svg class="bi bi-person-check" width="1.1em" height="1.1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6.854.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                </span>已诊患者
+                            </div>
+                            <div id="department-list-2" class="collapse" data-parent="">
+                                <table id="department-old-patient-list"
+                                       class="table table-hover-my table-bordered bg-white patient-table">
+                                    <thead class="bg-light">
+
+                                    <tr>
+                                        <th>
+                                            病历号
+                                        </th>
+                                        <th>
+                                            姓名
+                                        </th>
+                                        <th>性别</th>
+                                        <th>
+                                            年龄
+                                        </th>
+                                        <th>
+                                            医生
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>147258</td>
+                                        <td>程虎</td>
+                                        <td>男</td>
+                                        <td>32</td>
+                                        <td>张医生</td>
+                                    </tr>
+                                    <tr>
+                                        <td>147259</td>
+                                        <td>刘宇</td>
+                                        <td>男</td>
+                                        <td>32</td>
+                                        <td>李医生</td>
+                                    </tr>
+                                    <tr>
+                                        <td>147260</td>
+                                        <td>陈思</td>
+                                        <td>女</td>
+                                        <td>25</td>
+                                        <td>何医生</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--侧边栏最大化按钮-->
+        <span id="sidebar-maximize" class="btn btn-outline-secondary fixed-top" style="display: none">
+            <svg class="bi bi-box-arrow-in-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M8.146 11.354a.5.5 0 0 1 0-.708L10.793 8 8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"
+                    clip-rule="evenodd"/>
+              <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 1 8z"
+                    clip-rule="evenodd"/>
+              <path fill-rule="evenodd"
+                    d="M13.5 14.5A1.5 1.5 0 0 0 15 13V3a1.5 1.5 0 0 0-1.5-1.5h-8A1.5 1.5 0 0 0 4 3v1.5a.5.5 0 0 0 1 0V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-8A.5.5 0 0 1 5 13v-1.5a.5.5 0 0 0-1 0V13a1.5 1.5 0 0 0 1.5 1.5h8z"
+                    clip-rule="evenodd"/>
+            </svg>
+        </span>
+        <div class="flex-fill bg-light ml-3" id="main-page">
+            <div class="container-fluid pr-5 pl-5">
+                <!--病历首页菜单-->
+                <div id="card-menu" class="card mt-3"><!--text-center-->
+                    <!--卡片header(tabs)-->
+                    <div class="card-header bg-white border-0 shadow pt-5 pb-5 ">
+                        <ul id="card-menu-btn-group"
+                            class="nav nav-tabs card-header-tabs d-flex justify-content-center font-weight-bold h5"
+                            data-current-btn-id="#card-menu-btn-1"><!--此处记录显示的子页面-->
+                            <li id="card-menu-btn-1" class="nav-item nav-link card-menu-btn-selected"
+                                data-page-id="#card-menu-page1">
+                                <a>病历首页</a>
+                            </li>
+                            <li id="card-menu-btn-2" class="nav-item nav-link" data-page-id="#card-menu-page2">
+                                <a>检查申请</a>
+                            </li>
+                            <li id="card-menu-btn-3" class="nav-item nav-link" data-page-id="#card-menu-page3">
+                                <a>检验申请</a>
+                            </li>
+                            <li id="card-menu-btn-4" class="nav-item nav-link" data-page-id="#card-menu-page4">
+                                <a>门诊确诊</a>
+                            </li>
+                            <li id="card-menu-btn-5" class="nav-item nav-link" data-page-id="#card-menu-page5">
+                                <a>处置申请</a>
+                            </li>
+                            <li id="card-menu-btn-6" class="nav-item nav-link" data-page-id="#card-menu-page6">
+                                <a>开立处方</a>
+                            </li>
+                            <li id="card-menu-btn-7" class="nav-item nav-link" data-page-id="#card-menu-page7">
+                                <a>费用查询</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex bg-light mt-3">
+                        <span id="show-patient-btn" class="btn btn-outline-secondary icon-btn position-relative d-none"
+                              style="bottom: 7px"
+                              data-toggle="tooltip" data-placement="top" title="显示病人信息">
+                                                           <svg class="bi bi-eye-slash" width="1em" height="1em"
+                                                                viewBox="0 0 16 16" fill="currentColor"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                              <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                              <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299l.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                              <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709z"/>
+                              <path fill-rule="evenodd" d="M13.646 14.354l-12-12 .708-.708 12 12-.708.708z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                         </span>
+                        <span id="hide-patient-btn" class="btn btn-outline-secondary icon-btn position-relative d-none"
+                              style="bottom: 7px"
+                              data-toggle="tooltip" data-placement="top" title="隐藏病人信息">
+                               <svg class="bi bi-eye" width="1em" height="1em" viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                   <path fill-rule="evenodd"
+                                         d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"
+                                         clip-rule="evenodd"/>
+                                   <path fill-rule="evenodd"
+                                         d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                                         clip-rule="evenodd"/>
+                              </svg>
+                         </span>
+                        <div id="patient-info" class="d-none">
+                            <label class="patient-info">姓名:
+                                <a id="name"></a>
+                            </label>
+                            <label class="patient-info">病历号:
+                                <a id="medical_num"></a>
+                            </label>
+                            <label class="patient-info">性别:
+                                <a id="sex"></a>
+                            </label>
+                            <label class="patient-info">年龄:
+                                <a id="age"></a>
+                            </label>
+                        </div>
+                        <div id="finish-btn" class="outpatient-finish-btn ml-auto text-center mr-3 border d-none">
+                            诊毕
+                        </div>
+                    </div>
+                    <!--病历首页对应内容-->
+                    <div id="card-menu-page1" class="card-body bg-white shadow mb-5 ">
+                        <!--功能栏-->
+                        <div class="pt-0 pb-3  d-flex justify-content-end border-bottom ml-3 mr-3 mb-3">
+                            <!--暂存-->
+                            <span id="store-btn-1" class="icon-btn btn btn-outline-secondary mr-3" data-toggle="tooltip"
+                                  data-delay='{"hide":100}' data-placement="top" title="暂存病历">
+                            <svg class="bi bi-file-text" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M4.5 10.5A.5.5 0 0 1 5 10h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                        </span>
+                            <!--提交-->
+                            <span id="submit-btn-1" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-delay='{"hide":100}' data-placement="top" title="提交病历">
+                            <svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--清空所有-->
+                            <span id="clear-btn-1" class="icon-btn btn btn-outline-secondary mr-3" data-toggle="tooltip"
+                                  data-delay='{"hide":100}' data-placement="top" title="清空病历">
+                            <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                              <path fill-rule="evenodd"
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--刷新按钮-->
+                            <span id="refresh-btn-1" class="icon-btn btn btn-outline-secondary" data-toggle="tooltip"
+                                  data-delay='{"hide":100}' data-placement="top" title="刷新病历">
+                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        </div>
+                        <!--表单-->
+                        <form class="container-fluid">
+                            <div class="form-group">
+                                <div class="was-validated">
+                                    <label for="chief_complaint">主诉</label>
+                                    <textarea class="form-control" id="chief_complaint" type="text" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <label for="history_present_illness">现病史</label>
+                                    <textarea class="form-control" id="history_present_illness" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="">
+                                    <label for="current_treatment">现病治疗情况</label>
+                                    <textarea class="form-control " id="current_treatment" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="">
+                                    <label for="past_history">既往史</label>
+                                    <textarea class="form-control " id="past_history" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="">
+                                    <label for="allergic_history">过敏史</label>
+                                    <textarea class="form-control " id="allergic_history" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <label for="health_checkup">体格检查</label>
+                                    <textarea class="form-control " id="health_checkup" type="text"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-3 mb-3 pt-3 border-top">
+                                <div class="d-flex justify-content-center was-validated ">
+                                    <div class="custom-control custom-radio mr-4 radio-btn">
+                                        <input type="radio" class="custom-control-input" id="radio-1"
+                                               name="diagnosis_type" required>
+                                        <label class="custom-control-label font-weight-bold" for="radio-1">西医诊断</label>
+                                    </div>
+                                    <div class="custom-control custom-radio ml-4 radio-btn">
+                                        <input type="radio" class="custom-control-input" id="radio-2"
+                                               name="diagnosis_type" required>
+                                        <label class="custom-control-label font-weight-bold" for="radio-2">中医诊断</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <label>初步诊断</label>
+                            <div class="d-flex mb-2">
+                                <input id="add-disease-btn" type="button" class="btn btn-outline-dark mr-1" value="添加"
+                                       style="border-radius: 0">
+                                <input id="delete-disease-btn" type="button" class="btn btn-outline-danger" value="删除"
+                                       style="border-radius: 0">
+                            </div>
+                            <div class="form-group">
+
+                                <table id="table-disease"
+                                       class="table table-bordered table-hover-my bg-white text-center">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>ICD编码</th>
+                                        <th>疾病名称</th>
+                                        <th>诊断时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="disease_content">
+                                    <tr>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                        <td>
+                                            XXXX
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group ">
+                                <div class="">
+                                    <label for="checkup_advice">检查建议</label>
+                                    <textarea class="form-control " id="checkup_advice" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="">
+                                    <label for="announcements">注意事项</label>
+                                    <textarea class="form-control " id="announcements" type="text"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--检查申请内容-->
+                    <div id="card-menu-page2" class="card-body bg-white d-none shadow mb-5" style="min-height: 560px">
+                        <!--功能栏-->
+                        <div class="pt-0 pb-3  d-flex justify-content-end border-bottom ml-3 mr-3 mb-3">
+                            <!--新增项目-->
+                            <span id="add-check-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="新增项目">
+                                <svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd"
+                                            d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                            clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--删除项目-->
+                            <span id="delete-check-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="删除项目">
+                                <svg class="bi bi-dash-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--开立项目-->
+                            <span id="start-check-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="开立项目">
+                            <svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--作废项目-->
+                            <span id="invalid-check-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="作废项目">
+                                <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                        </span>
+                            <!--存为模板-->
+                            <span id="store-check-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="存为模板">
+                            <svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z"/>
+                              <path fill-rule="evenodd"
+                                    d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--刷新按钮-->
+                            <span class="icon-btn btn btn-outline-secondary" data-toggle="tooltip"
+                                  data-placement="top" title="刷新模板">
+                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        </div>
+                        <div class="container-fluid d-flex pl-0 pr-0">
+                            <div class="col-9">
+                                <table class="table table-bordered table-hover-my ">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:15%;">申请名称</th>
+                                        <th>项目名称</th>
+                                        <th style="width: 15%">执行科室</th>
+                                        <th style="width: 15%">执行状态</th>
+                                        <th style="width: 10%">单价</th>
+                                        <th style="width: 15%">检查结果</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="check-project-content" data-project-name="">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-3">
+                                <table class="table table-bordered table-hover-my">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="width: 40%">模板名称</th>
+                                        <th style="width: 60%">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>模板:腱鞘炎</td>
+                                        <td><span class='use-template-btn text-center mr-1'>使用</span><span
+                                                class='delete-template-btn text-center'>删除</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card-menu-page3" class="card-body bg-white d-none shadow mb-5 d-none"
+                         style="min-height: 560px">
+                        <!--功能栏-->
+                        <div class="pt-0 pb-3  d-flex justify-content-end border-bottom ml-3 mr-3 mb-3">
+                            <!--新增项目-->
+                            <span id="add-check-project-btn0" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="新增项目">
+                                <svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd"
+                                            d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                            clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--删除项目-->
+                            <span id="delete-check-project-btn0" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="删除项目">
+                                <svg class="bi bi-dash-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--开立项目-->
+                            <span id="start-check-project-btn0" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="开立项目">
+                            <svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--作废项目-->
+                            <span id="invalid-check-project-btn0" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="作废项目">
+                                <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                        </span>
+                            <!--存为模板-->
+                            <span id="store-check-project-btn0" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="存为模板">
+                            <svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z"/>
+                              <path fill-rule="evenodd"
+                                    d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+
+                            <!--刷新按钮-->
+                            <span class="icon-btn btn btn-outline-secondary" data-toggle="tooltip"
+                                  data-placement="top" title="刷新模板">
+                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        </div>
+                        <div class="container-fluid d-flex pl-0 pr-0">
+                            <div class="col-9">
+                                <table class="table table-bordered table-hover-my ">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:15%;">申请名称</th>
+                                        <th>项目名称</th>
+                                        <th style="width: 15%">执行科室</th>
+                                        <th style="width: 15%">执行状态</th>
+                                        <th style="width: 10%">单价</th>
+                                        <th style="width: 15%">检查结果</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="check-project-content0" data-project-name="">
+                                    <tr>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-3">
+                                <table class="table table-bordered table-hover-my">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="width: 40%">模板名称</th>
+                                        <th style="width: 60%">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>模板:XXX</td>
+                                        <td><span class='use-template-btn text-center mr-1'>使用</span><span
+                                                class='delete-template-btn text-center'>删除</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>模板:XXX</td>
+                                        <td><span class='use-template-btn text-center mr-1'>使用</span><span
+                                                class='delete-template-btn text-center'>删除</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card-menu-page4" class="card-body bg-white shadow d-none mb-5" style="min-height: 560px">
+                        <div class="container-fluid pl-0 pr-0">
+                            <div class="row">
+
+                                <div class="col-6">
+                                    <table class="table table-bordered table-hover-my text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>检查项目名称</th>
+                                            <th>检查结果</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>食管钡餐透视</td>
+                                            <td><span class='detail-btn text-center'>查看</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>食管钡餐透视</td>
+                                            <td><span class='detail-btn text-center'>查看</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>食管钡餐透视</td>
+                                            <td><span class='detail-btn text-center'>查看</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-6">
+                                    <table class="table table-bordered table-hover-my text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>检验项目名称</th>
+                                            <th>检查结果</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>XXXXX</td>
+                                            <td><span class='detail-btn text-center'>查看</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>XXXXX</td>
+                                            <td><span class='detail-btn text-center'>查看</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mt-3 border-top pt-2 mb-2">
+                                <label>最终诊断</label>
+                                <div class="d-flex mb-2">
+                                    <input id="add-disease-btn-1" type="button" class="btn btn-outline-dark mr-1"
+                                           value="添加"
+                                           style="border-radius: 0">
+                                    <input id="delete-disease-btn-1" type="button" class="btn btn-outline-danger"
+                                           value="删除"
+                                           style="border-radius: 0">
+                                </div>
+                                <table id="table-disease-1" class="table table-bordered table-hover-my text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>ICD编码</th>
+                                        <th>疾病名称</th>
+                                        <th>诊断时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="disease_content-1">
+                                    <tr>
+                                        <td>XXXXX</td>
+                                        <td>XXXXX</td>
+                                    </tr>
+                                    <tr>
+                                        <td>XXXXX</td>
+                                        <td>XXXXX</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card-menu-page5" class="card-body bg-white shadow d-none" style="min-height: 560px">
+                        <!--功能栏-->
+                        <div class="pt-0 pb-3  d-flex justify-content-end border-bottom ml-3 mr-3 mb-3">
+                            <!--新增项目-->
+                            <span id="add-deal-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="新增项目">
+                                <svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd"
+                                            d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
+                                            clip-rule="evenodd"/>
+                                      <path fill-rule="evenodd"
+                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                            clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--删除项目-->
+                            <span id="delete-deal-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="删除项目">
+                                <svg class="bi bi-dash-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <!--开立项目-->
+                            <span id="start-deal-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="开立项目">
+                            <svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--作废项目-->
+                            <span id="invalid-deal-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="作废项目">
+                                <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                     fill="currentColor"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
+                                        clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd"
+                                        d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                        </span>
+                            <!--存为模板-->
+                            <span id="store-deal-project-btn" class="icon-btn btn btn-outline-secondary mr-3"
+                                  data-toggle="tooltip"
+                                  data-placement="top" title="存为模板">
+                            <svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z"/>
+                              <path fill-rule="evenodd"
+                                    d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                            <!--刷新按钮-->
+                            <span class="icon-btn btn btn-outline-secondary" data-toggle="tooltip"
+                                  data-placement="top" title="刷新模板">
+                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                    d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+                                    clip-rule="evenodd"/>
+                              <path fill-rule="evenodd"
+                                    d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        </div>
+
+                        <div class="container-fluid d-flex pl-0 pr-0">
+                            <div class="col-9">
+                                <table class="table table-bordered table-hover-my ">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:15%;">申请名称</th>
+                                        <th>项目名称</th>
+                                        <th style="width: 15%">执行科室</th>
+                                        <th style="width: 15%">执行状态</th>
+                                        <th style="width: 10%">单价</th>
+                                        <th style="width: 15%">检查结果</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="deal-project-content" data-project-name="">
+                                    <tr>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                        <td>XXXX</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-3">
+                                <table class="table table-bordered table-hover-my">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="width: 40%">模板名称</th>
+                                        <th style="width: 60%">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>模板:XXX</td>
+                                        <td><span class='use-template-btn text-center mr-1'>使用</span><span
+                                                class='delete-template-btn text-center'>删除</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="card-menu-page6" class="card-body bg-white shadow d-none" style="min-height: 560px">
+                        6
+                    </div>
+                    <div id="card-menu-page7" class="card-body bg-white shadow d-none" style="min-height: 560px">
+                        7
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--提示框-->
+<div class="toast hide bg-white shadow" id="myToast" data-delay="500" data-animation="true" data-autohide="false"
+     style="position:fixed;top:30%;right:40%;width: 300px;height: 150px;border-radius: 0">
+    <div class="toast-header">
+        <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+        <strong class="mr-auto"></strong>
+        <small></small>
+        <!--        <button class="close ml-2 mb-1" data-dismiss="toast">&times;</button>-->
+    </div>
+    <div class="container-fluid text-center">
+        <div id="toast-content" class="toast-body text-center mt-3">
+        </div>
+        <div class="toast-close-btn text-center">确定</div>
+    </div>
+</div>
+<!--确认弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-confirm">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <p id="modal-content-confirm"></p>
+                <div class=" justify-content-lg-center">
+                    <div id="modal-confirm-btn" class=" modal-confirm-btn" data-dismiss="modal">确定</div>
+                    <div class=" modal-close-btn" data-dismiss="modal">取消</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加疾病弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-disease">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <div class=" justify-content-lg-center">
+                    <div>
+
+                    </div>
+                    <div>
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th>疾病名称</th>
+                                <th>国际ICD编码</th>
+                                <th>疾病助记编码</th>
+                                <th>疾病所属分类</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>亚速尔病(Azorean Disease)</td>
+                                <td>G31.802</td>
+                                <td>YSEB</td>
+                                <td>其它疾病</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>埃尔托小肠炎</td>
+                                <td>A00.153</td>
+                                <td>AETXCY</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>自身免疫性溶血性贫血</td>
+                                <td>D59.102</td>
+                                <td>免疫性疾病</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--                    <div id="modal-disease-btn" class=" modal-confirm-btn" data-dismiss="modal">确定</div>-->
+                    <div class="modal-close-btn" data-dismiss="modal">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加检查申请名称弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-check-name">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center was-validated">
+                <input id="check-name" class="form-control" style="border-radius: 0" placeholder="请输入申请名称" required>
+                <div class=" justify-content-lg-center mt-2">
+                    <div id="modal-add-check-name-btn" class=" modal-confirm-btn" data-dismiss="modal">确定</div>
+                    <div class=" modal-close-btn" data-dismiss="modal">取消</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加检查项目弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-check">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <div class=" justify-content-lg-center">
+                    <div>
+
+                    </div>
+                    <div>
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>执行科室</th>
+                                <th>单价</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>食管钡餐透视</td>
+                                <td>检验科</td>
+                                <td>15</td>
+                                <td>
+                                    <div class="modal-add-check-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>C型臂术中透视</td>
+                                <td>检验科</td>
+                                <td>150</td>
+                                <td>
+                                    <div class="modal-add-check-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>脑室碘水造影</td>
+                                <td>检验科</td>
+                                <td>60</td>
+                                <td>
+                                    <div class="modal-add-check-btn">添加</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-close-btn" data-dismiss="modal">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--查看检查结果弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-check-result">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <div class=" justify-content-lg-center">
+                    <div>
+
+                    </div>
+                    <div>
+                        <table class="table table-bordered-my">
+                            <thead>
+                            <tr>
+                                <th rowspan="2">检查结果</th>
+                                <th>项目名称</th>
+                                <th>项目状态</th>
+                            </tr>
+                            <tr>
+                                <td>食管钡餐透视</td>
+                                <td>完成</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="3">
+                                    食道钡透未见异常。钡剂充盈后胃呈鱼钩形，胃壁柔软光整，蠕动规则对称，胃粘膜增粗，未见龛影及充盈缺损，幽门管居中，控制功能正常。十二肠球呈三角形，粘膜清晰连续，降段，水平段，升段未见异常。
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-close-btn" data-dismiss="modal">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加疾病弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-disease-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <div class=" justify-content-lg-center">
+                    <div>
+
+                    </div>
+                    <div>
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th>疾病名称</th>
+                                <th>国际ICD编码</th>
+                                <th>疾病助记编码</th>
+                                <th>疾病所属分类</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>亚速尔病(Azorean Disease)</td>
+                                <td>G31.802</td>
+                                <td>YSEB</td>
+                                <td>其它疾病</td>
+                                <td>
+                                    <div class="modal-add-disease-btn-1">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>埃尔托小肠炎</td>
+                                <td>A00.153</td>
+                                <td>AETXCY</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn-1">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>自身免疫性溶血性贫血</td>
+                                <td>D59.102</td>
+                                <td>免疫性疾病</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn-1">添加</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--                    <div id="modal-disease-btn" class=" modal-confirm-btn" data-dismiss="modal">确定</div>-->
+                    <div class="modal-close-btn" data-dismiss="modal">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //冒泡提示工具
+        $('[data-toggle="tooltip"]').tooltip();
+
+        //左侧边栏最小化
+        $("#sidebar-minimize").click(function () {
+            $("#sidebar").hide(500, "swing");
+            $("#sidebar").removeClass("d-flex");
+            $("#sidebar-maximize").show(300);
+        });
+        //左侧栏最大化
+        $("#sidebar-maximize").click(function () {
+            $("#sidebar").show(500, "swing").addClass("d-flex");
+            $("#sidebar-maximize").css("display", "none");
+        });
+
+        //病人列表分类按钮
+        $(".patient-type-btn").click(function () {
+            const currentId = this.id;
+            $(".patient-type-btn").each(function () {
+                if (currentId === this.id) {
+                    if ($("#" + currentId).data("expand") === false) {
+                        //跳转至该分类列表
+                        $("#" + currentId).data("expand", true);
+                        $("#" + currentId).children("a").addClass("active");
+                        $($("#" + currentId).data("list-id")).removeClass("d-none");
+
+                    }
+                } else {
+                    if ($("#" + this.id).data("expand") === true) {
+                        $("#" + this.id).data("expand", false);
+                        $("#" + this.id).children("a").removeClass("active");
+                        $($("#" + this.id).data("list-id")).addClass("d-none");
+                    }
+                }
+            });
+        });
+
+        //搜索患者
+        $("#search-patient-btn").click(function () {
+            let input_id = $(this).data("input-id");
+            let name = $(input_id).val();
+            console.log("name:" + name);
+            let num = 0;
+            $(".patient-table").children("tbody").children("tr").each(function () {
+                if ($($(this).children("td")[1]).html() === name) {
+                    num++;
+                    console.log($($(this).children("td")[1]).html());
+                    $(this).click();
+                }
+            });
+            if (num === 0) {
+                showTipToast("未查询到患者!");
+            }
+            if (num > 1) {
+                showTipToast("查询到" + num + "位患者!");
+            }
+        });
+
+        //选择患者
+        $(".patient-table").children("tbody").children("tr").click(function () {
+            // $(this).children("td").each(function () {
+            //     console.log($(this).html());
+            // });
+            // console.log($($(this).children("td")[0]).html());
+            let index = $("#patient-card").data("selected");
+            $(".outpatient-finish-btn").removeClass("d-none");
+            if (index !== "") {
+                $($(this).parent("tbody").children("tr")[index]).removeClass("patient-list-selected");
+                $($("#self-new-patient-list").children("tbody").children("tr")[index]).removeClass("patient-list-selected");
+                $($("#self-old-patient-list").children("tbody").children("tr")[index]).removeClass("patient-list-selected");
+                $($("#department-new-patient-list").children("tbody").children("tr")[index]).removeClass("patient-list-selected");
+                $($("#department-old-patient-list").children("tbody").children("tr")[index]).removeClass("patient-list-selected");
+            }
+            $(this).addClass("patient-list-selected");
+            $("#patient-card").data("selected", $(this).index());
+            for (let i = 0; i < 4; i++) {
+                let value = $($(this).children("td")[i]).html();//点击的这个行的第i+1个列的值
+                $($("#patient-info").children("label")[i]).children("a").html(value);//给第i+1个label的a标签赋值
+            }
+            if ($("#patient-info").hasClass("d-none")) {
+                $("#show-patient-btn").removeClass("d-none");
+            }
+        });
+
+        //卡片菜单跳转(tab页面)
+        $("#card-menu-btn-group").children("li").click(function () {
+            const btn_id = $("#card-menu-btn-group").data("current-btn-id");//当前页面对应的按钮id
+            const page_id_old = $(btn_id).data("page-id");//当前显示的页面id
+            const page_id_new = $(this).data("page-id");//点击的按钮对应的页面id
+            if ($(btn_id) !== this) {
+                $(btn_id).removeClass("card-menu-btn-selected");
+                $(this).addClass("card-menu-btn-selected");
+                $(page_id_old).addClass("d-none");
+                $(page_id_new).removeClass("d-none");
+                $("#card-menu-btn-group").data("current-btn-id", "#" + this.id);
+            }
+        });
+
+        //显示隐藏病人信息
+        $("#hide-patient-btn").click(function () {
+            $("#patient-info").addClass("d-none");
+            $("#hide-patient-btn").addClass("d-none");
+            $("#show-patient-btn").removeClass("d-none");
+        });
+        $("#show-patient-btn").click(function () {
+            $("#patient-info").removeClass("d-none");
+            $("#show-patient-btn").addClass("d-none");
+            $("#hide-patient-btn").removeClass("d-none");
+        });
+
+        // 提示弹窗
+        function showTipToast(value) {
+            $("#toast-content").html(value);
+            $("#myToast").toast('show');
+            $("#modal-confirm-btn").unbind('click');//确认模态框中的回调函数添加了确认按钮的点击事件但是不能在其他地方解绑，所以要这里取消绑定
+            $("#modal-add-check-name-btn").unbind('click');
+        }
+
+        $(".toast-close-btn").click(function () {
+            $("#myToast").toast('hide');
+        });
+
+        //确认模态框  回调函数里面可以添加确认按钮的点击事件
+        function showConfirmModal(value, callback) {
+            $("#modal-content-confirm").html(value);
+            $("#modal-confirm").modal('show');
+            if (typeof callback === "function") {
+                callback();
+            }
+        }
+
+        //诊毕
+        $("#finish-btn").click(function () {
+            showConfirmModal("确认诊毕？", function () {
+                $("#modal-confirm-btn").click(function () {
+                    showTipToast("已诊毕!");
+                });
+            });
+        });
+
+        //功能区按钮
+        $("#store-btn-1").click(function () {
+            showTipToast("病历暂存成功!");
+        });
+
+        $("#submit-btn-1").click(function () {
+            showConfirmModal("确认提交病历信息?", function () {
+                $("#modal-confirm-btn").click(function () {
+                    showTipToast("提交成功!");
+                });
+            });
+        });
+
+        $("#clear-btn-1").click(function () {
+            showConfirmModal("确认清空病历信息?", function () {
+                $("#modal-confirm-btn").click(function () {
+                    showTipToast("清空!");
+                });
+            });
+        });
+
+        //获取当前时间
+        function getTime() {
+            function getNow(s) {
+                return s < 10 ? '0' + s : s;
+            }
+
+            const myDate = new Date();
+            const year = myDate.getFullYear();        //获取当前年
+            const month = myDate.getMonth() + 1;   //获取当前月
+            const date = myDate.getDate();            //获取当前日
+            const h = myDate.getHours();              //获取当前小时数(0-23)
+            const m = myDate.getMinutes();          //获取当前分钟数(0-59)
+            const s = myDate.getSeconds();
+            const now = year + '-' + getNow(month) + "-" + getNow(date) + " " + getNow(h) + ':' + getNow(m) + ":" + getNow(s);
+            return now;
+        }
+
+
+        //添加疾病
+        $("#add-disease-btn").click(function () {
+            $("#modal-disease").modal("show");
+        });
+        $(".modal-add-disease-btn").click(function () {
+            // $(this).parent("td").parent("tr")[0] 当前tr行
+            let tr = $($(this).parent("td").parent("tr")[0]);
+            // console.log($(tr.children("td").get(0)).html());
+            // console.log($(tr.children("td").get(1)).html());
+            // console.log($(tr.children("td").get(2)).html());
+            $("#table-disease").children("tbody").append("<tr><td>" + $(tr.children("td").get(1)).html() + "</td><td>" + $(tr.children("td").get(0)).html() + "</td><td>" + getTime() +
+                "</td></tr>");
+            $("#disease_content tr:last").click(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    $(this).removeClass("table-tr-selected");
+                } else {
+                    $(this).addClass("table-tr-selected");
+                }
+            });
+        });
+
+        //选中疾病
+        $("#disease_content").children("tr").click(function () {
+            if ($(this).hasClass("table-tr-selected")) {
+                $(this).removeClass("table-tr-selected");
+            } else {
+                $(this).addClass("table-tr-selected");
+            }
+        });
+
+        //删除疾病
+        $("#delete-disease-btn").click(function () {
+            let n = 0;
+            $("#disease_content").children("tr").each(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    n++;
+                }
+            });
+            if (n === 0) {
+                showTipToast("请至少选择一项。");
+            }
+            if (n > 0) {
+                showConfirmModal("是否删除" + n + "条疾病?", function () {
+                    $("#modal-confirm-btn").click(function () {
+                        showTipToast("成功删除" + n + "条数据!");
+                        $("#disease_content").children("tr").each(function () {
+                            if ($(this).hasClass("table-tr-selected")) {
+                                $(this).remove();
+                            }
+                        });
+                    });
+                });
+            }
+        });
+
+        //选中检查申请项目
+        $("#check-project-content").children("tr").click(function () {
+            if ($(this).hasClass("table-tr-selected")) {
+                $(this).removeClass("table-tr-selected");
+            } else {
+                $(this).addClass("table-tr-selected");
+            }
+        });
+
+        //添加检查项目
+        $("#add-check-project-btn").click(function () {
+            //先添加申请名称
+            if ($("#check-project-content").data("project-name") === "") {
+                //添加申请名称
+                $("#modal-check-name").modal('show');
+                $("#modal-add-check-name-btn").click(function () {
+                    let name = $("#check-name").val();
+                    $("#check-name").val("");
+                    $("#check-project-content").data("project-name", name);
+                    showTipToast("申请名称为" + name);
+                });
+                // console.log($("#check-project-content").data("project-name"));
+            } else {
+                $("#modal-check").modal('show');
+            }
+        });
+        $(".modal-add-check-btn").click(function () {
+            let tr = $($(this).parent("td").parent("tr")[0]);
+            $("#check-project-content").append("<tr><td>" + $("#check-project-content").data("project-name") + "</td><td>" + $(tr.children("td").get(0)).html() + "</td><td>" + $(tr.children("td").get(1)).html() + "</td><td>暂存</td><td>" + $(tr.children("td").get(2)).html() +
+                "</td><td><span class='detail-btn text-center'>查看</span></td></tr>");
+            $("#check-project-content tr:last").click(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    $(this).removeClass("table-tr-selected");
+                } else {
+                    $(this).addClass("table-tr-selected");
+                }
+            });
+            $("#check-project-content tr:last td:last").children("span").click(function () {
+                //查看详情
+                $("#modal-check-result").modal('show');
+//TODO 查看详情
+                event.stopPropagation();
+            });
+        });
+
+        //删除检查项目
+        $("#delete-check-project-btn").click(function () {
+            let all = 0;
+            let n = 0;
+            $("#check-project-content tr").each(function () {
+                all++;
+                if ($(this).hasClass("table-tr-selected")) {
+                    n++;
+                }
+            });
+            if (n === 0) {
+                showTipToast("请至少选择一项。");
+            }
+            if (n > 0) {
+                showConfirmModal("是否删除" + n + "项检查申请?", function () {
+                    $("#modal-confirm-btn").click(function () {
+                        showTipToast("成功删除" + n + "条数据!");
+                        $("#check-project-content tr").each(function () {
+                            if ($(this).hasClass("table-tr-selected")) {
+                                $(this).remove();
+                                if (all === n) {
+                                    $("#check-project-content").data("project-name", "");
+                                }
+                            }
+                        });
+                    });
+                });
+            }
+        });
+
+        //使用检查申请模板
+        var check_data = [{
+            "name": "模板:腱鞘炎",
+            "item_name": "醛固酮测定(化X发光法、荧光免疫法)",
+            "department": "检验科",
+            "status": "暂存",
+            "price": "50"
+        }, {
+            "name": "模板:腱鞘炎",
+            "item_name": "X浆肾素活性测定",
+            "department": "检验科",
+            "status": "暂存",
+            "price": "80"
+        }];
+        $(".use-template-btn").click(function () {
+            let current_name = $($(this).parent("td").parent("tr").children("td")[0]).html();
+            let old_name = $("#check-project-content").data("project-name");
+            if (old_name === current_name) {
+                showTipToast("已经使用该模板!");
+                return;
+            } else if (old_name != "") {
+                let n = 0;
+                $("#check-project-content tr").each(function () {
+                    n++;
+                });
+                if (n !== 0) {
+                    showTipToast("请清空项目后再使用模板");
+                    return;
+                }
+            }
+
+            for (let i = 0; i < check_data.length; i++) {
+                //添加数据
+                $("#check-project-content").append("<tr><td>" + check_data[i].name + "</td><td>" + check_data[i].item_name + "</td><td>" + check_data[i].department + "</td><td>" + check_data[i].status + "</td><td>" + check_data[i].price + "</td><td><span class='detail-btn text-center'>查看</span></td></tr>");
+                //添加点击事件
+                $("#check-project-content tr:last").click(function () {
+                    if ($(this).hasClass("table-tr-selected")) {
+                        $(this).removeClass("table-tr-selected");
+                    } else {
+                        $(this).addClass("table-tr-selected");
+                    }
+                });
+                $("#check-project-content tr:last td:last").children("span").click(function () {
+                    //查看详情
+                    $("#modal-check-result").modal('show');
+                    event.stopPropagation();
+                });
+            }
+            $("#check-project-content").data("project-name", current_name);
+        });
+
+        //提交项目
+        $("#start-check-project-btn").click(function () {
+            showConfirmModal("是否提交申请项目?", function () {
+                $("#modal-confirm-btn").click(function () {
+                    showTipToast("提交成功!");
+                });
+            });
+        });
+
+        //作废检查项目
+        $("#invalid-check-project-btn").click(function () {
+            let n = 0;
+            $("#check-project-content tr").each(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    n++;
+                }
+                if (n > 0) {
+                    showConfirmModal("是否作废" + n + "条项目?", function () {
+                        $("modal-confirm-btn").click(function () {
+                            showTipToast("作废成功!");
+                        });
+                    });
+                }
+            });
+        });
+
+        //删除模板
+        $(".delete-template-btn").click(function () {
+            var tr = $(this).parent("td").parent("tr");
+            showConfirmModal("确认删除模板吗?", function () {
+                $("#modal-confirm-btn").click(function () {
+                    tr.remove();
+                    showTipToast("删除模板成功!");
+                });
+            });
+        });
+
+        //门诊确诊
+        $(".detail-btn").click(function () {
+            $("#modal-check-result").modal('show');
+        });
+
+        //FIXME 添加疾病
+        $("#add-disease-btn-1").click(function () {
+            $("#modal-disease-1").modal("show");
+        });
+        $(".modal-add-disease-btn-1").click(function () {
+            let tr = $($(this).parent("td").parent("tr")[0]);
+            $("#table-disease-1").children("tbody").append("<tr><td>" + $(tr.children("td").get(1)).html() + "</td><td>" + $(tr.children("td").get(0)).html() + "</td><td>" + getTime() +
+                "</td></tr>");
+            $("#disease_content-1 tr:last").click(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    $(this).removeClass("table-tr-selected");
+                } else {
+                    $(this).addClass("table-tr-selected");
+                }
+            });
+        });
+
+        //选中疾病
+        $("#disease_content-1").children("tr").click(function () {
+            if ($(this).hasClass("table-tr-selected")) {
+                $(this).removeClass("table-tr-selected");
+            } else {
+                $(this).addClass("table-tr-selected");
+            }
+        });
+
+        //删除疾病
+        $("#delete-disease-btn-1").click(function () {
+            let n = 0;
+            $("#disease_content-1").children("tr").each(function () {
+                if ($(this).hasClass("table-tr-selected")) {
+                    n++;
+                }
+            });
+            if (n === 0) {
+                showTipToast("请至少选择一项。");
+            }
+            if (n > 0) {
+                showConfirmModal("是否删除" + n + "条疾病?", function () {
+                    $("#modal-confirm-btn").click(function () {
+                        showTipToast("成功删除" + n + "条数据!");
+                        $("#disease_content-1").children("tr").each(function () {
+                            if ($(this).hasClass("table-tr-selected")) {
+                                $(this).remove();
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

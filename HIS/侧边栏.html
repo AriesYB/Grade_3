@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侧边栏</title>
+    <!-- bootstrap框架核心样式 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 引入jquery文件 -->
+    <script src="js/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        /*侧边栏*/
+        #side {
+            width: 5rem;
+            transition: width 1s;
+            -webkit-transition: width 1s;
+        }
+        /*侧边栏展开*/
+        .side-expand{
+            width: 15rem !important;
+            transition: width 1s;
+            -webkit-transition: width 1s;
+        }
+
+        #side:hover{
+            width: 15rem;
+        }
+        /*侧边栏上部分*/
+        #side-nav{
+            padding-right: 0.75rem;
+        }
+        /*黑色色调*/
+        .bg-dark-1 {
+            background-color: #242939 !important;
+        }
+        /*侧边栏菜单项按钮*/
+        .sidebar-content-btn{
+            background-color: #242939;
+            color: #6c757d;
+            text-align: center !important;
+            padding: 1rem !important;
+            font-weight: 500;
+            line-height: 1.2;
+            font-size: 1.25rem;
+            margin: 0 !important;
+        }
+
+        .sidebar-content-btn:hover {
+            cursor: pointer;
+            background-color: #191b27  !important;
+            color: #f8f9fa !important;
+        }
+        /*侧边栏菜单项按钮点击后*/
+        .sidebar-content-btn-selected {
+            background-color: #191b27  !important;
+            color: #f8f9fa !important;
+        }
+        /*侧边栏菜单项子菜单按钮*/
+        .sidebar-content-btn-2{
+            background-color: #242939;
+            color: #6c757d;
+            text-align: center !important;
+            padding: 1rem !important;
+            font-weight: 300;
+            line-height: 1;
+            font-size: 1rem;
+            margin: 0 !important;
+        }
+        .sidebar-content-btn-2:hover{
+            cursor: pointer;
+            background-color: #191b27  !important;
+            color: #f8f9fa !important;
+        }
+        .sidebar-content-btn-2-selected{
+            background-color: #191b27  !important;
+            color: #f8f9fa !important;
+        }
+    </style>
+</head>
+<body>
+<div id="side" class="bg-dark-1 p-0">
+    <div id="sidebar" class="d-flex flex-column">
+        <nav id="side-nav" class="navbar navbar-dark bg-dark-1 d-flex flex-row-reverse">
+            <button id="sidebar-btn" class="navbar-toggler" data-expand="false">
+                <span id="sidebar-btn-icon" class="navbar-toggler-icon"></span>
+                <svg id="sidebar-btn-icon-1" class="bi bi-text-indent-right text-light d-none" width="1.5em"
+                     height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+                          clip-rule="evenodd"/>
+                </svg>
+            </button>
+        </nav>
+        <div id="sidebar-content" class="d-flex flex-column accordion">
+            <div id="menu-item-1" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                 data-target="#menu-item-1-child" aria-controls="menu-item-1-child" aria-expanded="false">门诊医生
+            </div>
+            <div class="collapse" id="menu-item-1-child" data-parent="#sidebar-content">
+                <div class="bg-dark-1">
+                    <div id="menu-item-1-child-1" class="sidebar-content-btn-2" data-href="outpatient.html"
+                         data-selected="false">
+                        门诊病历
+                    </div>
+                    <div id="menu-item-1-child-2" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        医技模板
+                    </div>
+                    <div id="menu-item-1-child-3" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        西药处方模板
+                    </div>
+                    <div id="menu-item-1-child-4" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        中药处方模板
+                    </div>
+                </div>
+            </div>
+            <div id="menu-item-2" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                 data-target="#menu-item-2-child" aria-controls="menu-item-2-child" aria-expanded="false">医技处置
+            </div>
+            <div class="collapse" id="menu-item-2-child" data-parent="#sidebar-content">
+                <div class="bg-dark-1">
+                    <div id="menu-item-2-child-1" class="sidebar-content-btn-2" data-href="outpatient.html"
+                         data-selected="false">
+                        患者检查
+                    </div>
+                    <div id="menu-item-2-child-2" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        患者检验
+                    </div>
+                    <div id="menu-item-2-child-3" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        患者处置
+                    </div>
+                    <div id="menu-item-2-child-4" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        医技管理
+                    </div>
+                </div>
+            </div>
+            <div id="menu-item-3" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                 data-target="#menu-item-3-child" aria-controls="menu-item-3-child" aria-expanded="false">药房管理
+            </div>
+            <div class="collapse" id="menu-item-3-child" data-parent="#sidebar-content">
+                <div class="bg-dark-1">
+                    <div id="menu-item-3-child-1" class="sidebar-content-btn-2" data-href="outpatient.html"
+                         data-selected="false">
+                        门诊发药
+                    </div>
+                    <div id="menu-item-3-child-2" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        门诊退药
+                    </div>
+                    <div id="menu-item-3-child-3" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        药品管理
+                    </div>
+                </div>
+            </div>
+            <div id="menu-item-4" class="sidebar-content-btn" data-selected="false" data-toggle="collapse"
+                 data-target="#menu-item-4-child" aria-controls="menu-item-4-child" aria-expanded="false">财务信息
+            </div>
+            <div class="collapse" id="menu-item-4-child" data-parent="#sidebar-content">
+                <div class="bg-dark-1">
+                    <div id="menu-item-4-child-1" class="sidebar-content-btn-2" data-href="outpatient.html"
+                         data-selected="false">
+                        费用科目管理
+                    </div>
+                    <div id="menu-item-4-child-2" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        门诊日结核对
+                    </div>
+                    <div id="menu-item-4-child-3" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        门诊科室工作统计
+                    </div>
+                    <div id="menu-item-4-child-4" class="sidebar-content-btn-2" data-href=""
+                         data-selected="false">
+                        门诊医生工作统计
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+//点击菜单按钮
+        $("#sidebar-btn").click(function () {
+            let isExpanded = $("#sidebar-btn").data("expand");
+            if (isExpanded === false) {//固定侧边栏
+                $("#sidebar-btn").data("expand", true);
+                $("#side").addClass("side-expand");
+                $("#sidebar-btn-icon").addClass("d-none");
+                $("#sidebar-btn-icon-1").removeClass("d-none");
+            } else {//取消固定
+                $("#sidebar-btn").data("expand", false);
+                $("#side").removeClass("side-expand");
+                $("#sidebar-btn-icon").removeClass("d-none");
+                $("#sidebar-btn-icon-1").addClass("d-none");
+            }
+        });
+        //点击菜单项
+        $(".sidebar-content-btn").click(function () {
+            const current = this.id;
+            $(".sidebar-content-btn").each(function () {
+                if (current === this.id) {
+                    if ($("#" + current).data("selected") === false) {
+                        $("#" + current).data("selected", true);
+                        $("#" + current).addClass("sidebar-content-btn-selected");
+                    }
+                } else {
+                    if ($("#" + this.id).data("selected") === true) {
+                        $("#" + this.id).data("selected", false);
+                        $("#" + this.id).removeClass("sidebar-content-btn-selected");
+                    }
+                }
+            })
+        });
+        //点击子菜单项
+        $(".sidebar-content-btn-2").click(function () {
+            const current = this.id;
+            //显示对应子页面
+            const src = $("#"+current).data("href");
+            $("iframe").attr("src",src);
+            $(".sidebar-content-btn-2").each(function () {
+                if (current === this.id) {
+                    if ($("#" + current).data("selected") === false) {
+                        $("#" + current).data("selected", true);
+                        $("#" + current).addClass("sidebar-content-btn-2-selected");
+                    }
+                } else {
+                    if ($("#" + this.id).data("selected") === true) {
+                        $("#" + this.id).data("selected", false);
+                        $("#" + this.id).removeClass("sidebar-content-btn-2-selected");
+                    }
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>

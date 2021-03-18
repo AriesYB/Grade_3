@@ -1,0 +1,23 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Test.java
+
+
+interface ITool
+{
+
+    public abstract void execute();
+
+    public static transient void useTool(ITool tools[])
+    {
+        ITool aitool[] = tools;
+        int i = aitool.length;
+        for(int j = 0; j < i; j++)
+        {
+            ITool tool = aitool[j];
+            tool.execute();
+        }
+
+    }
+}

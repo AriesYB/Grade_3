@@ -1,0 +1,9 @@
+
+p	java:S116"ORename this field "PORT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÇîþÙþÿÿÿÿ8±ý„ô°.
+t	java:S116#"SRename this field "PERSONAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç„ÊÓùÿÿÿÿ8Œž”ô°.
+t	java:S116!"SRename this field "PASSWORD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íŽÙÖøÿÿÿÿ8±ý„ô°.
+t	java:S116""SRename this field "ENCODING" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡ú¼Ëúÿÿÿÿ8êž‰ô°.
+p	java:S116"ORename this field "HOST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½µçòøÿÿÿÿ8‚«ƒô°.
+n	java:S116 "SRename this field "USERNAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²£€G8±ý„ô°.
+V
+java:S2168<"9Remove this dangerous instance of double-checked locking.(Ì‚èð8±ý„ô°.

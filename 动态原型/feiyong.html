@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="css/outpatient.css">
+    <style>
+        .btn{
+            display: inline-block !important;
+            font-weight: 400 !important;
+            padding: 6px 9px !important;
+            vertical-align: middle !important;
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            width: 80px !important;
+            height: 35px !important;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+<div class="tabCon" style="display:block">
+    <div class="row cl mb-10">
+        <label class="form-label col-xs-4 col-sm-2" style="text-align: right;top: 5px">费用查询：</label>
+        <div class="formControls col-xs-8 col-sm-9 row">
+            <input type="text"  class="input-text" placeholder="请输入内容" style="width: 200px">
+            <span class="btn btn-primary modal-confirm-btn">搜索</span>
+        </div>
+    </div>
+
+        <div class="col-md-6 col-md-offset-2">
+            <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive edtitable">
+                <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>费用</th>
+                    <th>内容</th>
+                    <th>状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td> 检查 </td>
+                    <td>XXX</td>
+                    <td>详细</td>
+                    <td>已缴费</td>
+                </tr>
+                <tr>
+                    <td> 检查 </td>
+                    <td>XXX</td>
+                    <td>详细</td>
+                    <td>未缴费</td> </tr>
+                <tr>
+                    <td>处置</td>
+                    <td>XXX</td>
+                    <td>详细</td>
+                    <td>已处置</td>
+                </tr>
+                <tr>
+                    <td> 药品 </td>
+                    <td>XXX</td>
+                    <td>详细</td>
+                    <td>已取药</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+</body>
+</html>

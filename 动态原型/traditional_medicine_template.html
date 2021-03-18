@@ -1,0 +1,266 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+<link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>产品分类</title>
+	<link rel="stylesheet" href="css/outpatient.css">
+	<style>
+		.btn{
+			display: inline-block !important;
+			font-weight: 400 !important;
+			padding: 6px 9px !important;
+			vertical-align: middle !important;
+			font-size: 1rem !important;
+			line-height: 1.5 !important;
+			width: 80px !important;
+			height: 35px !important;
+			transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+		}
+	</style>
+</head>
+<body>
+<!--<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 门诊医生 <span class="c-gray en">&gt;</span> 医技模板管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>-->
+<!--<table class="table">
+	<tr>
+		<td class="va-t"><iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%  height=390px SRC="product-category-add.html"></iframe></td>
+	</tr>
+</table>
+-->
+
+<div class="formControls col-md-4 col-md-offset-1">
+	<div class="row cl mt-10">
+		<label class="form-label col-md-2 ">名称：</label>
+		<div class="formControls col-md-6 ">
+			<input type="text" class="input-text radius" width="" />
+		</div>
+	</div>
+	<div class="row cl mt-10">
+		<label class="form-label col-md-2 ">范围：</label>
+		<div class="formControls col-md-4">
+			<select class="select" width="60%">
+				<option>个人</option>
+				<option>全院</option>
+			</select>
+		</div>
+	</div>
+	<button class="btn btn-primary modal-confirm-btn mt-10 "> 搜索</button>
+
+	<br/>
+	<br/>
+
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+		<thead>
+			<tr>
+				<th>名称</th>
+				<th>时间</th>
+				<th>范围</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>XXX</td>
+				<td>XXX</td>
+				<td>检查</td>
+			</tr>
+			<tr>
+				<td>XXX</td>
+				<td>XXX</td>
+				<td>个人</td>
+			</tr>
+			<tr>
+				<td>XXX</td>
+				<td>XXX</td>
+				<td>XXX</td>
+			</tr>
+			<tr>
+				<td>XXX</td>
+				<td>XXX</td>
+				<td>全院</td>
+			</tr>
+			<tr>
+				<td>XXX</td>
+				<td>XXX</td>
+				<td>XXX</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="f-r">
+		<button class="btn btn-primary modal-confirm-btn mt-10">添加模板</button>
+	</div>
+	<!--模板table-->
+</div>
+<div class="row cl col-md-7 f-r mt-10">
+	<div >
+		<label class="form-label col-md-2 text-r"> 操作：</label>
+		<div class="formControls col-md-2">
+			<button class="btn btn-primary modal-confirm-btn">修改模板</button>
+		</div>
+		<div class="formControls col-md-2">
+			<button class="btn btn-danger">删除模板</button>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<div class="panel panel-default">
+		<div class="panel-header">中药处方模板明细</div>
+		<div class="panel-body">
+			<div>
+				<label class="form-label col-md-2 ">名称：</label>
+				<div class="formControls col-md-6 ">
+					<input type="text" class="input-text radius" value="胃痛" />
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div>
+				<label class="form-label col-md-2 ">创建时间：</label>
+				<div class="formControls col-md-6 ">
+					<input type="date" class="input-text radius" />
+				</div>
+			</div>	
+
+			<br/>
+			<br/>
+
+			<div class="">
+				<label class="form-label col-md-2 ">范围：</label>
+				<div class="formControls col-md-4">
+					<select class="select" width="60%">
+						<option>个人</option>
+						<option>全院</option>
+					</select>
+				</div>
+			</div>
+			<br/>	
+			<br/>	
+			<div >
+				<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>数量</th>
+							<th>单位</th>
+							<th>用法</th>
+							<th>频次</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td><button class="btn btn-danger ">删除</button></td>
+						</tr>
+						<tr>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td><button class="btn btn-danger ">删除</button></td>
+						</tr>	
+					</tbody>
+				</table>
+				<div class="f-r">
+					<button class="btn btn-primary modal-confirm-btn mt-10">添加药品</button>
+				</div>
+			</div>
+
+			<br/>
+			<br/>
+
+		</div>
+	</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script> 
+<script type="text/javascript">
+var setting = {
+	view: {
+		dblClickExpand: false,
+		showLine: false,
+		selectedMulti: false
+	},
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+			rootPId: ""
+		}
+	},
+	callback: {
+		beforeClick: function(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("tree");
+			if (treeNode.isParent) {
+				zTree.expandNode(treeNode);
+				return false;
+			} else {
+				demoIframe.attr("src",treeNode.file + ".html");
+				return true;
+			}
+		}
+	}
+};
+
+var zNodes =[
+	{ id:1, pId:0, name:"一级分类", open:true},
+	{ id:11, pId:1, name:"二级分类"},
+	{ id:111, pId:11, name:"三级分类"},
+	{ id:112, pId:11, name:"三级分类"},
+	{ id:113, pId:11, name:"三级分类"},
+	{ id:114, pId:11, name:"三级分类"},
+	{ id:115, pId:11, name:"三级分类"},
+	{ id:12, pId:1, name:"二级分类 1-2"},
+	{ id:121, pId:12, name:"三级分类 1-2-1"},
+	{ id:122, pId:12, name:"三级分类 1-2-2"},
+];
+		
+var code;
+		
+function showCode(str) {
+	if (!code) code = $("#code");
+	code.empty();
+	code.append("<li>"+str+"</li>");
+}
+		
+$(document).ready(function(){
+	var t = $("#treeDemo");
+	t = $.fn.zTree.init(t, setting, zNodes);
+	demoIframe = $("#testIframe");
+	//demoIframe.on("load", loadReady);
+	var zTree = $.fn.zTree.getZTreeObj("tree");
+	//zTree.selectNode(zTree.getNodeByParam("id",'11'));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+
+=
+java:S1214B""Move constants to a class or enum.(›öà¶ûÿÿÿÿ
+Z	java:S106p"9Replace this use of System.out or System.err by a logger.(¾®ÚÜüÿÿÿÿ8Ü„÷×£.
+D
+java:S1214a""Move constants to a class or enum.(ëÒô±üÿÿÿÿ8ÝÌç×£.
+Z	java:S106w"9Replace this use of System.out or System.err by a logger.(Ëä²ðüÿÿÿÿ8Ü„÷×£.
+M	java:S106W"9Replace this use of System.out or System.err by a logger.(Š±Ãu
+S	java:S106-"9Replace this use of System.out or System.err by a logger.(÷Åý¨ÿÿÿÿÿ
+Z	java:S106~"9Replace this use of System.out or System.err by a logger.(Æ©ðäþÿÿÿÿ8Ü„÷×£.
+C
+java:S11727"(Remove this unused method parameter "a".(ß•µ†øÿÿÿÿ
+S	java:S106P"9Replace this use of System.out or System.err by a logger.(ÍÎñ“ûÿÿÿÿ
+N	java:S106H"9Replace this use of System.out or System.err by a logger.(õÔ°§
+S	java:S106;"9Replace this use of System.out or System.err by a logger.(ƒå¦ˆùÿÿÿÿ

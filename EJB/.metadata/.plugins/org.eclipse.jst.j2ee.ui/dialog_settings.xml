@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="false" key="J2EE_EXPORT_OVERWRITE"/>
+	<item value="false" key="J2EE_EXPORT_SOURCE"/>
+	<list key="J2EE_EXPORT_JST_EJB">
+		<item value="D:\Code\Grade_3\EJB\ejb_client\myEjb.jar"/>
+	</list>
+	<list key="MRU_RUNTIME_STORE">
+		<item value="JBoss 7.1 Runtime"/>
+		<item value="NULL_RUNTIME"/>
+	</list>
+</section>

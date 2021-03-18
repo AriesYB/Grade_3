@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('pull code') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a7d287bb-54b8-4fbe-96b5-212191f84cce', url: 'http://172.18.169.208:9000/HetFrame/NEU-yangb-bosssoft-train-example.git']]])
+            }
+        }
+        stage('build project') {
+            steps {
+                sh label: '', script: 'mvn clean test package -Dmaven.test.skip=true'
+            }
+        }
+        stage('code checking') {
+            steps {
+                script {
+                    scannerHome = tool 'MyScanner'
+                }
+                withSonarQubeEnv('MySonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+    }
+}

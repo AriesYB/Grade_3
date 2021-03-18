@@ -1,0 +1,39 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Test.java
+
+import java.io.PrintStream;
+
+class C extends B
+{
+
+    C()
+    {
+    }
+
+    public void f()
+    {
+        super.b();
+    }
+
+    void f(int a)
+    {
+        B b = new B() {
+
+            public void f()
+            {
+                System.out.println("\u8986\u5199\u62BD\u8C61\u65B9\u6CD5");
+            }
+
+            final C this$0;
+
+            
+            {
+                this.this$0 = C.this;
+                super();
+            }
+        }
+;
+    }
+}

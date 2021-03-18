@@ -1,0 +1,293 @@
+/*页内滚动*/
+#main-page, #sidebar {
+    overflow: auto;
+}
+
+#main-page::-webkit-scrollbar, #sidebar::-webkit-scrollbar {
+    border-width: 1px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+/*取消输入框、按钮蓝框*/
+button:focus {
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #6c757d;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.btn, textarea, input {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+textarea {
+    border-radius: 0 !important;
+}
+
+#refresh-patient-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+#sidebar-minimize {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+#sidebar-maximize {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+#sidebar-minimize-patient {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+#search-patient-btn {
+    position: static;
+    border-radius: 0;
+}
+
+/*病人列表分类按钮*/
+.patient-type-btn:hover {
+    cursor: pointer;
+}
+
+#self-btn a, #department-btn a {
+    border: 0;
+    border-radius: 0;
+}
+
+#self-btn:hover, #department-btn:hover {
+    background-color: #c0c0c0;
+}
+
+.active {
+    background-color: #f1f2f7 !important;
+}
+
+#self-list, #department-list {
+    background-color: #f1f2f7;
+}
+
+/*病人列表按钮*/
+.patient-list-btn {
+    background-color: #f1f2f7;
+    color: #131724;
+    text-align: center !important;
+    padding: 1rem !important;
+    font-weight: 300;
+    line-height: 1;
+    font-size: 1rem;
+    margin: 0 !important;
+    /*box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;*/
+}
+
+.patient-list-btn:hover {
+    background-color: #c0c0c0;
+    color: #000000;
+    cursor: pointer;
+}
+
+.patient-list-btn, span {
+    bottom: 2px;
+}
+
+.patient-list-selected {
+    background-color: #5b72f2 !important;
+    color: white;
+}
+
+.table-hover-my tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+/*卡片菜单-病历首页。。。*/
+#card-menu {
+    border: 0;
+}
+
+#card-menu-btn-group li {
+    margin: 0 0.5rem;
+    /*border-radius: 0;*/
+    border-radius: 0;
+}
+
+#card-menu-btn-group li:hover {
+    cursor: pointer;
+    /*background-color: #e2e2e2;*/
+    /*color: #5b72f2;*/
+    background-color: #5b72f2;
+    color: white;
+}
+
+.card-menu-btn-selected {
+    /*background-color: #e2e2e2;*/
+    /*color: #5b72f2;*/
+    background-color: #5b72f2;
+    color: white;
+}
+
+/*病人信息内容标签*/
+.patient-info {
+    margin: 0 2px 0 2px;
+    bottom: 0;
+}
+
+/*诊毕按钮*/
+.outpatient-finish-btn {
+    width: 80px;
+    height: 35px;
+    display: inline-block;
+    font-weight: 400;
+    padding: 6px 9px;
+    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #000000;
+    background-color: transparent;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    bottom: 5px;
+}
+
+.outpatient-finish-btn:hover {
+    cursor: pointer;
+    /*background-color: #377aff;*/
+    background-color: #5b72f2;
+    border-color: #5b72f2;
+    color: white;
+    box-shadow: 0 0.5rem 1.5rem rgba(73, 81, 89, 0.49) !important;
+}
+
+/*首页功能栏*/
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+/*选择radio*/
+.radio-btn:hover, .radio-btn input:hover, .radio-btn label:hover {
+    cursor: pointer;
+}
+
+/*!*选择框*!*/
+/*.check-box {*/
+/*    display: inline-block;*/
+/*    box-sizing: border-box;*/
+/*    cursor: pointer;*/
+/*    position: relative;*/
+/*    top: 5px;*/
+/*    line-height: normal;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    !*background: url(../img/minimal.png) no-repeat;*!*/
+/*    border: none;*/
+/*}*/
+
+/*表格操作*/
+table tbody tr:hover {
+    cursor: pointer;
+}
+
+table th, table tbody tr td {
+    border: 0 !important;
+}
+
+.table-bordered-my th,.table-bordered-my tr,.table-bordered-my td{
+    border:1px solid !important;
+    vertical-align: middle !important;
+}
+
+.table-tr-selected {
+    background-color: #5b72f2 !important;
+    color: white !important;
+}
+
+/*弹窗关闭按钮*/
+.toast-close-btn {
+    display: inline-block;
+    font-weight: 400;
+    padding: 6px 9px;
+    color: #f1f1f1;
+    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.5;
+    width: 80px;
+    height: 35px;
+    border-color: #6c757d;
+    background-color: #6c757d;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.toast-close-btn:hover {
+    cursor: pointer;
+    background-color: #495159;
+    color: white;
+}
+
+.modal-confirm-btn, .modal-close-btn, .modal-add-disease-btn, .modal-add-check-btn, .detail-btn,.use-template-btn,.delete-template-btn,.modal-add-disease-btn-1{
+    display: inline-block;
+    font-weight: 400;
+    padding: 6px 9px;
+    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.5;
+    width: 80px;
+    height: 35px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
+.modal-confirm-btn, .modal-add-disease-btn, .modal-add-check-btn,.modal-add-disease-btn-1{
+    color: #f1f1f1;
+    background-color: #595cff;
+    border-color: #595cff;
+}
+
+.modal-close-btn, .detail-btn ,.use-template-btn,.delete-template-btn {
+    color: #f1f1f1;
+    border-color: #6c757d;
+    background-color: #6c757d;
+}
+
+
+.modal-confirm-btn:hover, .modal-add-disease-btn:hover, .modal-add-check-btn:hover,.modal-add-disease-btn-1:hover{
+    cursor: pointer;
+    background-color: #3739a7;
+    border-color: #3739a7;
+    color: white;
+}
+
+.modal-close-btn:hover, .detail-btn:hover,.use-template-btn:hover,.delete-template-btn:hover {
+    cursor: pointer;
+    background-color: #495159;
+    color: white;
+}
+.use-template-btn,.delete-template-btn{
+    width: 50px !important;
+}

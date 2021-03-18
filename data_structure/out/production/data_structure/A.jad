@@ -1,0 +1,27 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Test.java
+
+
+final class A
+{
+
+    A()
+    {
+    }
+
+    public String toString()
+    {
+        return (new StringBuilder()).append("A{a=").append(a).append(", b=").append(b).append(", c=").append(c).append(", d=").append(d).append(", e=").append(e).append(", f=").append(f).append(", g=").append(g).append(", h=").append(h).append('}').toString();
+    }
+
+    boolean a;
+    char b;
+    byte c;
+    short d;
+    int e;
+    long f;
+    float g;
+    double h;
+}

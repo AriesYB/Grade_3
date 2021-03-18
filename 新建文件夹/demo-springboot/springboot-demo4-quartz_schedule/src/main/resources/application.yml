@@ -1,0 +1,11 @@
+server:
+  port: 80
+logging:
+  level:
+    root: debug
+spring:
+  mail:
+    default-encoding: UTF-8
+    username: 1678335192@qq.com
+    password: xcutdpxfylokejdf
+    host: smtp.qq.com

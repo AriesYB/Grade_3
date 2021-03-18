@@ -1,0 +1,28 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: provider1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.93.191.78:3306/outpatient_department?characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 476900
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: org.ybiao.springcloud.provider1.bean
+logging:
+  level:
+    root: INFO
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ybiao.qicp.vip:40884/eureka/,http://ikanp.top:7001/eureka/,http://121.37.188.7:7001/eureka/
+  instance:
+    instance-id: provider-01
+    prefer-ip-address: true
+    ip-address: 121.37.188.7
+info.app.name: ${spring.application.name}
+info.instanceId: ${eureka.instance.instance-id}
+info.port: ${server.port}
+info.author: ybiao

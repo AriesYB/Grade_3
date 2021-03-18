@@ -1,0 +1,66 @@
+#nav {
+    background: rgba(1, 1, 1, 0.3);
+}
+
+#navbar a {
+    position: relative;
+}
+
+#navbar li a:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-bottom: solid 3px;
+    transform: scaleX(0);
+    transform-origin: right;
+    /*改为center就是中间向外延伸*/
+    -webkit-transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    color: #ff4c00;
+}
+
+#navbar li a:hover:after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+#dropDownMenu {
+    display: none;
+    position: fixed;
+}
+
+#dropDown:hover #dropDownMenu {
+    display: block;
+}
+
+.dropdownItem {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    background-color: transparent;
+}
+
+.card {
+    border: none;
+    !important;
+}
+
+#ad {
+    width: 5rem;
+    height: 7rem;
+    position: fixed;
+    right: 0;
+    bottom: 10rem;
+}
+
+#ad a {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem 0;
+}

@@ -1,0 +1,5 @@
+
+š
+java:S1130t"}Remove the declaration of thrown exception 'java.io.UnsupportedEncodingException', as it cannot be thrown from method's body.(Ä¶‡É8ÒþÊ–±.
+[
+java:S2168"9Remove this dangerous instance of double-checked locking.(ãÆ“çýÿÿÿÿ8ÒþÊ–±.

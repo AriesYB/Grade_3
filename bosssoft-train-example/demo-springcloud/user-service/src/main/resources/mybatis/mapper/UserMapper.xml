@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosssoft.learning.dao.UserDao">
+    <resultMap id="userDto" type="UserDTO">
+        <id column="id" property="id"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <association property="company" javaType="Company">
+            <id column="c_id" property="id"/>
+            <result column="c_name" property="name"/>
+        </association>
+        <collection property="roles" ofType="Role" javaType="java.util.HashSet">
+            <id column="r_id" property="id"/>
+            <result column="r_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectById" resultMap="userDto">
+        SELECT u.id,
+               u.password,
+               u.name,
+               u.age,
+               u.sex,
+               u.phone,
+               u.address,
+               c.id   as c_id,
+               c.name as c_name,
+               r.id   as r_id,
+               r.name as r_name
+        FROM user u
+                 LEFT JOIN company c ON u.company_id = c.id
+                 LEFT JOIN user_role ur ON u.id = ur.user_id
+                 LEFT JOIN role r ON ur.role_id = r.id
+        WHERE u.deleted = 0
+          AND u.id = #{id}
+    </select>
+
+    <select id="selectByCondition" parameterType="UserQuery" resultMap="userDto">
+        SELECT
+        u.id,
+        u.password,
+        u.name,
+        u.age,
+        u.sex,
+        u.phone,
+        u.address,
+        c.id as c_id,
+        c.name as c_name,
+        r.id as r_id,
+        r.name as r_name
+        FROM user u
+        LEFT JOIN company c ON u.company_id = c.id
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role r ON ur.role_id = r.id
+        WHERE u.deleted = 0
+        <if test="id!=null">
+            AND u.id = #{id}
+        </if>
+        <if test="name!=null and name != ''">
+            AND u.name LIKE CONCAT('%',CONCAT(#{name},'%'))
+        </if>
+        <if test="phone!=null and phone!= ''">
+            AND u.phone = #{phone}
+        </if>
+        <if test="companyId!=null">
+            AND c.id = #{companyId}
+        </if>
+        <if test="companyName!=null and companyName!=''">
+            AND c.name LIKE CONCAT('%',CONCAT(#{companyName},'%'))
+        </if>
+        <if test="roleId!=null">
+            AND r.id = #{roleId}
+        </if>
+        <if test="roleName!=null and roleName!=''">
+            AND r.name LIKE CONCAT('%',CONCAT(#{roleName},'%'))
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+        <if test="id!=null">
+            id,
+        </if>
+        password,
+        name,
+        age,
+        sex,
+        address,
+        phone
+        <if test="companyId!=null">
+            ,company_id
+        </if>
+        )
+        values (
+        <if test="id!=null">
+            #{id},
+        </if>
+        #{password},
+        #{name},
+        #{age},
+        #{sex},
+        #{address},
+        #{phone}
+        <if test="companyId!=null">
+            ,#{companyId}
+        </if>
+        );
+    </insert>
+
+    <update id="update" parameterType="User">
+        UPDATE user
+        <set>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="password!=null and password!=''">
+                password = #{password},
+            </if>
+            <if test="age!=null and age!=0">
+                age=#{age},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="address!=null and address!=''">
+                address=#{address},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone=#{phone},
+            </if>
+            <if test="companyId!=null">
+                company_id=#{companyId}
+            </if>
+        </set>
+        WHERE id = #{id}
+        AND deleted = 0
+    </update>
+
+    <delete id="delete" parameterType="User">
+        UPDATE user
+        SET deleted = 1
+        WHERE id = #{id}
+          AND deleted = 0;
+    </delete>
+
+    <delete id="deleteById">
+        UPDATE user
+        SET deleted = 1
+        WHERE id = #{id}
+          AND deleted = 0;
+    </delete>
+
+    <delete id="deleteList" parameterType="java.util.List">
+        UPDATE user
+        SET deleted = 1
+        WHERE id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND deleted = 0;
+    </delete>
+</mapper>

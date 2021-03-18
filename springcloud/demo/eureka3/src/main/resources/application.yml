@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: regist-center
+server:
+  port: 7001
+eureka:
+  server:
+    #是否启动自我保护模式
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://ikanp.top:7001/eureka/,http://ybiao.qicp.vip:40884/eureka/
+  instance:
+    hostname: 121.37.188.7

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry
+            location="D:\Tools\maven_local_repository\mysql\mysql-connector-java\8.0.19\mysql-connector-java-8.0.19.jar"/>
+    <context id="sqlServerTable" targetRuntime="MyBatis3">
+
+        <!-- 生成的pojo，将implements Serializable-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库链接URL、用户名、密码 -->
+        <jdbcConnection
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://47.93.191.78:3307/test?characterEncoding=utf-8&amp;serverTimezone=GMT%2B8"
+                userId="root"
+                password="476900">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 对应的model模型 -->
+        <javaModelGenerator targetPackage="com.bosssoft.learning.model" targetProject="./src/main/java">
+            <property name="constructorBased" value="true"/>
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 对应的mapper.xml文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 对应的Mapper接口类文件 -->
+        <javaClientGenerator targetPackage="com.bosssoft.learning.mapper" targetProject="./src/main/java" type="MIXEDMAPPER">
+            <property name="enableSubPackages" value="true"/>
+            <property name="exampleMethodVisibility" value="public"/>
+        </javaClientGenerator>
+
+        <!-- 列出要生成代码的所有表 -->
+        <table tableName="t_user" schema="test" domainObjectName="User">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="t_company" schema="test" domainObjectName="Company">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="t_role" schema="test" domainObjectName="Role">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="t_user_role" schema="test" domainObjectName="UserRole"/>
+    </context>
+</generatorConfiguration>

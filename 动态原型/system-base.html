@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="css/outpatient.css">
+    <style>
+        .btn{
+            display: inline-block !important;
+            font-weight: 400 !important;
+            padding: 6px 9px !important;
+            vertical-align: middle !important;
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            width: 80px !important;
+            height: 35px !important;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+        }
+    </style>
+</head>
+<body>
+<div class="tabCon " style="display:block">
+    <div class="formControls col-md mt-10">
+        <span id="xiyaotab" class="btn btn-success modal-confirm-btn" onclick="change(0);">西药处方</span>
+        <span id="zhongyaotab" class="btn btn-default detail-btn" onclick="change(1);">中药处方</span>
+    </div>
+
+    <!--上面的按钮控制下面的显示-->
+
+    <div id="xiyao" style="display:none">
+        <div class="row cl col-md-5 col-md-offset-0">
+            <h4>常用模板</h4>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive edtitable">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="20px">模板名称</th>
+                        <th width="40px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="">
+                        <td style="text-align:center">肩周炎</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td style="text-align:center">XXX</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td style="text-align:center">XXX</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row cl col-md-6 f-r">
+            <br/>
+
+            <div class="col-md">
+                <input type="text" name="key" class="input-text " style="width:60%" placeholder="请输入查找的药品列表">
+                <button class="btn btn-success  mt-10" style="vertical-align:sub;margin-top: 0;width: 100px !important;" onclick="getPills()">&nbsp;查找药品&nbsp;</button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <div class="l">
+                    <a onclick="cancel()" class="btn btn-danger ">
+                        <i class="Hui-iconfont">&#xe6e2;</i>
+                        取消
+                    </a>
+                    <a class="btn btn-primary modal-confirm-btn" onclick="prescribe()">
+                        <i class="Hui-iconfont">&#xe600;</i>
+                        开立
+                    </a>
+                </div>
+                <span class="r">共有数据：<strong id="amount">0</strong> 条</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive edtitable">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="25px"><input type="checkbox" name="r" value=""></th>
+                        <th width="100px">药品编号</th>
+                        <th width="300px">药品名称</th>
+                        <th width="100px">单价</th>
+                        <th width="200px">规格</th>
+                        <th width="100px">包装</th>
+                        <th width="500px">用法</th>
+                        <th width="150px" class="del-col">数量</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table_data"></tbody>
+                </table>
+                <button class="btn btn-primary modal-confirm-btn" style="float:right">
+                    添加药品
+                </button>
+            </div>
+            <div class="row cl col-md-4 col-md-offset-9">
+                <button class="btn btn-secondary ">
+                    暂存
+                </button>
+                <button class="btn btn-danger ">
+                    取消
+                </button>
+                <button class="btn btn-primary modal-confirm-btn">
+                    开立
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="zhongyao" style="display:block">
+        <div class="row cl col-md-5 col-md-offset-0">
+            <h4>常用模板</h4>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive edtitable">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="20px">模板名称</th>
+                        <th width="40px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="">
+                    <tr class="">
+                        <td style="text-align:center">风湿病</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td style="text-align:center">XXX</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td style="text-align:center">XXX</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success  mt-10"> 使用</button>
+                            <button class="btn btn-danger  mt-10"> 删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row cl col-md-6 f-r">
+            <br/>
+
+            <div class="col-md">
+                <input type="text" name="key" class="input-text " style="width:60%" placeholder="请输入查找的药品列表">
+                <button class="btn btn-success  mt-10" style="vertical-align:sub;margin-top: 0;width: 100px !important;" onclick="getPills()">&nbsp;查找药品&nbsp;</button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <div class="l">
+                    <a onclick="cancel()" class="btn btn-danger ">
+                        <i class="Hui-iconfont">&#xe6e2;</i>
+                        取消
+                    </a>
+                    <a class="btn btn-primary modal-confirm-btn" onclick="prescribe()">
+                        <i class="Hui-iconfont">&#xe600;</i>
+                        开立
+                    </a>
+                </div>
+                <span class="r">共有数据：<strong id="amount">0</strong> 条</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive edtitable">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="300px">药品名称</th>
+                        <th width="300px">数量</th>
+                        <th width="300px">单位</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table_data"></tbody>
+                </table>
+                <button class="btn btn-primary modal-confirm-btn" style="float:right">
+                    添加药品
+                </button>
+            </div>
+            <div class="row cl col-md-4 col-md-offset-9">
+                <button class="btn btn-secondary ">
+                    暂存
+                </button>
+                <button class="btn btn-danger ">
+                    取消
+                </button>
+                <button class="btn btn-primary modal-confirm-btn">
+                    开立
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+
+    var stat=0;//表征西药处方还是中药处方
+    function change(s){
+        if(s === stat){
+            return;
+        }
+
+        //变成中药配方
+        if(stat==0){
+            document.getElementById("xiyao").style.display = "none";
+            document.getElementById("zhongyao").style.display = "block";
+
+            document.getElementById("zhongyaotab").className = "btn btn-success modal-confirm-btn";
+            document.getElementById("xiyaotab").className = "btn btn-default detail-btn";
+
+            stat = 1;
+        }
+        else{
+
+            document.getElementById("zhongyao").style.display = "none";
+            document.getElementById("xiyao").style.display = "block";
+
+            document.getElementById("zhongyaotab").className = "btn btn-default detail-btn";
+            document.getElementById("xiyaotab").className = "btn btn-success modal-confirm-btn";
+
+            stat = 0
+        }
+
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <!-- bootstrap框架核心样式 -->
+    <!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <!-- 引入jquery文件 -->
+    <script src="js/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/outpatient.css">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+
+    <title>发药</title>
+    <meta name="keywords" content="">
+    <meta name="distribution" content="">
+</head>
+<body>
+<article class="page-container">
+    <form action="" method="post" class="form form-horizontal" id="form-charge">
+        <div class="row cl">
+            <label class="form-label col-xs-1 col-sm-1"><span class="c-red">*</span>药品编码</label>
+            <div class="formControls col-xs-2 col-sm-2">
+                <input type="text" class="input-text" value="" placeholder="" id="no" name="no">
+            </div>
+            <div class="formControls col-xs-2 col-sm-2">
+				<span class="modal-confirm-btn text-center" onclick="doSearch()" style="    box-sizing: border-box;
+    text-align: center;">查询</span>
+            </div>
+            <div class="formControls col-xs-2 col-sm-2">
+                <!--
+                    <input class="btn btn-primary radius" type="button" value="&nbsp;&nbsp;新增药品&nbsp;&nbsp;" onclick="doAdd();">
+                -->
+                <span class="modal-confirm-btn text-center" onclick="modaldemo()" style="    box-sizing: border-box;
+    text-align: center;">添加</span>
+            </div>
+        </div>
+
+        <div class="col-md-7 mt-5" style="overflow-x: auto; overflow-y: auto; height: 200px; width:700px;">
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>药品编号</th>
+                    <th>药品名称</th>
+                    <th>药品规格</th>
+                    <th>药品单位</th>
+                    <th>药品单价</th>
+                    <th>药品剂型</th>
+                    <th>药品类型</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="med_content">
+                <tbody>
+                <tr class="text-c">
+                    <td><input type="checkbox" value="" name=""></td>
+                    <td>101</td>
+                    <td class="text-l">山药颗粒</td>
+                    <td>0.5g/10g/袋</td>
+                    <td>袋</td>
+                    <td>6.79</td>
+                    <td>颗粒剂</td>
+                    <td>中成药</td>
+                    <td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="anothermodaldemo()" href="javascript:;"
+                           title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="deletethis()" href="javascript:;"
+                           title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+                </tr>
+                <tr class="text-c">
+                    <td><input type="checkbox" value="" name=""></td>
+                    <td>102</td>
+                    <td class="text-l">泽泻颗粒</td>
+                    <td>1g/10g/袋</td>
+                    <td>袋</td>
+                    <td>0.09</td>
+                    <td>颗粒剂</td>
+                    <td>中成药</td>
+                    <td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="编辑"><i
+                                class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="删除"><i
+                                class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+                </tr>
+                <tr class="text-c">
+                    <td><input type="checkbox" value="" name=""></td>
+                    <td>103</td>
+                    <td class="text-l">盐酸美金刚片</td>
+                    <td>10gx28片/盒</td>
+                    <td>盒</td>
+                    <td>22.05</td>
+                    <td>片剂</td>
+                    <td>西药</td>
+                    <td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="编辑"><i
+                                class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+                </tr>
+                <tr class="text-c">
+                    <td><input type="checkbox" value="" name=""></td>
+                    <td>104</td>
+                    <td class="text-l">注射甲氨蝶呤</td>
+                    <td>10g/支</td>
+                    <td>支</td>
+                    <td>15073</td>
+                    <td>针剂</td>
+                    <td>西药</td>
+                    <td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="编辑"><i
+                                class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+                </tr>
+                <tr class="text-c">
+                    <td><input type="checkbox" value="" name=""></td>
+                    <td>105</td>
+                    <td class="text-l">红芪</td>
+                    <td>10g/袋</td>
+                    <td>袋</td>
+                    <td>30.79</td>
+                    <td>中药饮片</td>
+                    <td>中草药</td>
+                    <td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:void(0);" title="编辑"><i
+                                class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="删除"><i
+                                class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+                </tr>
+                </tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="left: 10px; top: 40px;">
+			<span class="modal-confirm-btn text-center" onclick="deleteAll()" style="    box-sizing: border-box;
+    text-align: center;">删除</span>
+        </div>
+
+    </form>
+</article>
+<!--添加疾病弹窗-->
+<div class="modal fade" tabindex="-1" id="modal-disease">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow" style="border-radius: 0;margin-bottom: 100px;border-radius: 0">
+            <div class="modal-header p-2">
+                <img src="img/his.ico" alt="" width="20" class="rounded mr-2">
+            </div>
+            <div class="modal-body text-center">
+                <div class=" justify-content-lg-center">
+                    <div>
+                        <table class="table table-hover-my">
+                            <thead>
+                            <tr>
+                                <th>疾病名称</th>
+                                <th>国际ICD编码</th>
+                                <th>疾病助记编码</th>
+                                <th>疾病所属分类</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>亚速尔病(Azorean Disease)</td>
+                                <td>G31.802</td>
+                                <td>YSEB</td>
+                                <td>其它疾病</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>埃尔托小肠炎</td>
+                                <td>A00.153</td>
+                                <td>AETXCY</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>自身免疫性溶血性贫血</td>
+                                <td>D59.102</td>
+                                <td>免疫性疾病</td>
+                                <td>肠炎</td>
+                                <td>
+                                    <div class="modal-add-disease-btn">添加</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--                    <div id="modal-disease-btn" class=" modal-confirm-btn" data-dismiss="modal">确定</div>-->
+                    <div class="modal-close-btn" data-dismiss="modal">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--弹出窗口的内容1-->
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">增加药品</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品编号：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品名称：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品规格：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品单位：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品单价：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品剂型：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品类型：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-add_prescription" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"
+                   href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="searchBar text-c mt-5">
+                    <input id="search_drug" name="searchKeyword1" placeholder="请输入药品名称"
+                           class="input-text searchTxt" style="width: 50%">
+                </div>
+                <div class="mt-5 mb-5 ml-5 mr-5" id="search-result1">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead class="text-c">
+                        <tr>
+                            <th>药品名称</th>
+                            <th>规格</th>
+                            <th>单价</th>
+                            <th>生产厂家</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="search_content_drug" class="text-c">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹出窗口的内容2-->
+<div id="another-modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">编辑药品</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品编号：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="101">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品名称：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="山药颗粒">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品规格：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="0.5g/10g/袋">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品单位：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="袋">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品单价：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="6.79">
+                    </div>
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品剂型：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="颗粒剂">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-1 col-sm-1" style="display:inline-block;width:120px;"><span
+                            class="c-red">*</span>药品类型：</label>
+                    <div class="formControls col-xs-2 col-sm-2">
+                        <input type="text" class="input-text" value="中成药">
+                    </div>
+                </div>
+                <!--
+                   <p>药物属性一</p>
+                   <p>药物属性二</p>
+                   <p>药物属性三</p>
+                   <p>药物属性四</p>
+                   <p>药物属性五</p>
+               -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+
+    function doSearch() {  //查询按钮
+        //document.getElementById('med_content').deleteRow(0);
+        //document.getElementById('med_content').deleteRow(1);
+        //document.getElementById('med_content').deleteRow(2);
+        //document.getElementById('med_content').deleteRow(3);
+        //document.getElementById('med_content').deleteRow(4);
+        $("#med_content").append(
+            "<tr id=\"row_search-1\"><td id=\"no_search-"
+            + 1 + "\">" + '<input type="checkbox" value="" name="">'
+            + "</td><td id=\"no_search-"
+            + 1 + "\">" + "109" + "</td><td id=\"name_search-"
+            + 1 + "\">" + "六味地黄丸" + "</td><td id=\"specifiction_search-"
+            + 1 + "\">" + "0.5gx10g/盒" + "</td><td id=\"unit_search-"
+            + 1 + "\">" + "盒" + "</td><td id=\"price_search-"
+            + 1 + "\">" + "20.15" + "</td><td id=\"form_search-"
+            + 1 + "\">" + "片剂" + "</td><td id=\"type_search-"
+            + 1 + "\">" + "中成药" + "</td><td id=\"operation_search-"
+            + 1 + "\">" + '<a style="text-decoration:none" class="ml-5" onClick="" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a><a style="text-decoration:none" class="ml-5" onClick="deletethis()" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>')
+    }
+
+    function deleteAll() {  //退药
+
+    }
+
+    function modaldemo() {
+        $("#modal-demo").modal("show");
+        // $("#modal-add_prescription").modal('show');
+    }
+
+    // function anothermodaldemo() {
+    //     $("#another-modal-demo").modal("show")
+    // }
+
+
+    function deletethis() {
+        document.getElementById('med_content').deleteRow(0);
+    }
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <persistence-unit name="ejb_entity">
+        <jta-data-source>java:/MySqlDS</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
+
+            <!--            &lt;!&ndash;配置Hibernate方言 &ndash;&gt;-->
+            <!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
+            <!--            &lt;!&ndash;配置数据库驱动 &ndash;&gt;-->
+            <!--            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
+            <!--            &lt;!&ndash;配置数据库用户名 &ndash;&gt;-->
+            <!--            <property name="hibernate.connection.username" value="root"/>-->
+            <!--            &lt;!&ndash;配置数据库密码 &ndash;&gt;-->
+            <!--            <property name="hibernate.connection.password" value="476900"/>-->
+            <!--            &lt;!&ndash;配置数据库url &ndash;&gt;-->
+            <!--            <property name="hibernate.connection.url"-->
+            <!--                      value="jdbc:mysql://127.0.0.1:3307/outpatient_department?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false"/>-->
+            <!--            &lt;!&ndash;自动输出schema创建DDL语句 &ndash;&gt;-->
+            <!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+        </properties>
+    </persistence-unit>
+</persistence>
